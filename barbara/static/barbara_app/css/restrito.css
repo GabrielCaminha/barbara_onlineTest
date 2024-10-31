@@ -1,0 +1,5 @@
+
+/* CSS for restrito2.html */
+:root { --primary-purple: #8e44ad; --primary-pink: #e84393; }
+body { font-family: 'Poppins', sans-serif; background-color: var(--bg-pink-light); }
+.stat-card { transition: all 0.3s ease; cursor: pointer; }

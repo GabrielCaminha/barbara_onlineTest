@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Agressores</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        img {
+            max-width: 200px;
+            height: auto;
+        }
+        hr {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Agressores</h1>
+    <ul>
+        {% for agressor in agressores %}
+            <li>
+                <strong>Nome:</strong> {{ agressor.nome }} <br>
+                <strong>Idade:</strong> {{ agressor.idade }} <br>
+                <strong>CPF:</strong> {{ agressor.cpf }} <br>
+                <strong>Nome Social:</strong> {{ agressor.nome_social }} <br>
+                <strong>Sexo:</strong> {{ agressor.sexo }} <br>
+                <strong>Email:</strong> {{ agressor.email }} <br>
+                <strong>Telefone:</strong> {{ agressor.telefone }} <br>
+                <strong>Profissão:</strong> {{ agressor.profissao }} <br>
+                
+                {% if agressor.foto %}
+                    <strong>Foto:</strong><br>
+                    <img src="{{ agressor.foto.url }}" alt="Foto de {{ agressor.nome }}"><br>
+                {% endif %}
+                
+                <strong>Última Vítima:</strong> 
+                {% if agressor.ultima_vitima %}
+                    {{ agressor.ultima_vitima.nome }} <br>
+                {% else %}
+                    Nenhuma <br>
+                {% endif %}
+                
+                <strong>Ficha Criminal:</strong><br>
+                {% if agressor.ficha_criminal %}
+                    {{ agressor.ficha_criminal }}<br>
+                {% else %}
+                    Nenhuma ficha criminal registrada.<br>
+                {% endif %}
+                
+                <strong>Vítimas:</strong><br>
+                {% if agressor.vitimas.all %}
+                    <ul>
+                        {% for vitima in agressor.vitimas.all %}
+                            <li>{{ vitima.nome }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    Nenhuma vítima registrada.<br>
+                {% endif %}
+            </li>
+            <hr>  
+        {% endfor %}
+    </ul>
+</body>
+</html>

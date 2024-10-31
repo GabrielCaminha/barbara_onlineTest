@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem-vindo ao Barbara</title>
+</head>
+<body>
+    <h1>Bem-vindo ao Barbara</h1>
+    <p>Esse é um sistema para gerenciar vítimas, agressores e ocorrências.</p>
+    
+    <h2>Navegação</h2>
+    <ul>
+        <li><a href="{% url 'lista_vitimas' %}">Lista de Vítimas</a></li>
+        <li><a href="{% url 'lista_agressores' %}">Lista de Agressores</a></li>
+        <li><a href="{% url 'lista_ocorrencias' %}">Lista de Ocorrências</a></li>
+        <li><a href="{% url 'botao_panico' %}">Lista de Botoes do Panico</a></li>
+        <li><a href="{% url 'restrito' %}">Restrito</a></li>
+    </ul>
+</body>
+</html>

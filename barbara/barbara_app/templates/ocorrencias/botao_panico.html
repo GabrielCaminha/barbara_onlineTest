@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Botões Pânico</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Lista de Botões Pânico</h1>
+
+        <div class="row">
+            {% for botao in botoes %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Botão Pânico de {{ botao.vitima.nome }}</h5>
+                            <p class="card-text"><strong>Data Ocorrido:</strong> {{ botao.data_ocorrido }}</p>
+                            <p class="card-text"><strong>Hora:</strong> {{ botao.hora }}</p>
+                            <p class="card-text"><strong>Localização:</strong> {{ botao.localizacao }}</p>
+                            <p class="card-text"><strong>Telefone da Vítima:</strong> {{ botao.telefone_vitima }}</p>
+                            <p class="card-text"><strong>Status:</strong> {{ botao.status }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <div class="alert alert-warning" role="alert">
+                        Nenhum botão pânico encontrado.
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Ocorrências</title>
+</head>
+<body>
+    <h1>Ocorrências</h1>
+    <ul>
+        {% for ocorrencia in ocorrencias %}
+            <li>
+                <strong>Nome da Vitima:</strong> {{ ocorrencia.vitima }} <br>
+                <strong>Nome do Agressor:</strong> {{ ocorrencia.agressor }} <br>
+                <strong>Tipo de Crime:</strong> {{ ocorrencia.tipo_crime }} <br>
+                <strong>Descrição:</strong> {{ ocorrencia.descricao }} <br>
+                <strong>Data da Ocorrência:</strong> {{ ocorrencia.data_ocorrencia }} <br>
+            </li>
+        </br>
+        {% endfor %}
+    </ul>
+</body>
+</html>

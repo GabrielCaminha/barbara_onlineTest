@@ -1,0 +1,5 @@
+
+/* CSS for barbara.html */
+:root { --primary-color: #6a0dad; --secondary-color: #4caf50; }
+body { font-family: 'Poppins', sans-serif; background-color: var(--light-bg); }
+.hero h1 { font-size: 3.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }

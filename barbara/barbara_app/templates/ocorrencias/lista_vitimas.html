@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Vítimas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .vitima {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .ocorrencias {
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Vítimas</h1>
+    <ul>
+        {% for vitima in vitimas %}
+            <li class="vitima">
+                <strong>Nome:</strong> {{ vitima.nome }} <br>
+                {% if vitima.foto %}  
+                    <strong>Foto:</strong><br>
+                    <img src="{{ vitima.foto.url }}" alt="Foto de {{ vitima.nome }}" style="max-width: 200px; height: auto;"><br>
+                {% endif %}
+                <strong>Data de Nascimento:</strong> {{ vitima.data_nascimento }} <br>
+                <strong>Idade:</strong> {{ vitima.idade }} <br>  
+                <strong>CPF:</strong> {{ vitima.cpf }} <br>
+                <strong>RG:</strong> {{ vitima.rg }} <br>
+                <strong>Endereço:</strong> {{ vitima.endereco }} <br>
+                <strong>Ocupação:</strong> {{ vitima.ocupacao }} <br>
+                <strong>Telefone:</strong> {{ vitima.telefone }} <br>
+                <strong>Estado Atual:</strong> {{ vitima.estado_atual }} <br>
+                <strong>Medida Protetiva:</strong> {{ vitima.medida_protetiva|yesno:"Sim,Não" }} <br>
+                <strong>Contato:</strong> {{ vitima.lista_contatos.contato_nome }} - {{ vitima.lista_contatos.contato_telefone }} <br>
+
+                <strong>Ocorrências:</strong>
+                <div class="ocorrencias">
+                    {% if vitima.lista_ocorrencias %}
+                        <ul>
+                            {% for ocorrencia in vitima.lista_ocorrencias %}
+                                <li>
+                                    <strong>Descrição:</strong> {{ ocorrencia.descricao }} <br>
+                                    <strong>Data da Ocorrência:</strong> {{ ocorrencia.data_ocorrencia }} <br>
+                                    <strong>Tipo de Crime:</strong> {{ ocorrencia.tipo_crime }} <br>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>Nenhuma ocorrência registrada.</p>
+                    {% endif %}
+                </div>
+            </li>
+            <hr>  
+        {% endfor %}
+    </ul>
+</body>
+</html>
