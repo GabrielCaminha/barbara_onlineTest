@@ -1,5 +1,11 @@
 from django import forms
-from .models import Vitima, Agressor, Ocorrencia, BotaoPanico, Boletim_Ocorrencia, Denuncia, Formulario_Contato
+from .models import Vitima, Agressor, Ocorrencia, BotaoPanico, Boletim_Ocorrencia, Denuncia, Formulario_Contato, ListaContatos
+
+
+class ListaContatosForm(forms.ModelForm):
+    class Meta:
+        model = ListaContatos
+        fields = ['contato_nome', 'contato_telefone']
 
 class VitimaForm(forms.ModelForm):
     class Meta:

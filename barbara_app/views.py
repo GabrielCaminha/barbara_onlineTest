@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Vitima, Agressor, Ocorrencia, BotaoPanico, Boletim_Ocorrencia, Denuncia, Formulario_Contato
-from .forms import VitimaForm, AgressorForm, OcorrenciaForm, Boletim_OcorrenciaForm, DenunciaForm, Formulario_ContatoForm
+from .forms import VitimaForm, AgressorForm, OcorrenciaForm, Boletim_OcorrenciaForm, DenunciaForm, Formulario_ContatoForm, ListaContatosForm
 from django.views.decorators.csrf import csrf_exempt
 def home(request):
     return render(request, 'ocorrencias/home.html')
@@ -11,16 +11,27 @@ def lista_vitimas(request):
     return render(request, 'ocorrencias/lista_vitimas.html', {'vitimas': vitimas})
 
 @csrf_exempt
-def create_vitima(request):
-    if request.method == "POST":
-        form = VitimaForm(request.POST, request.FILES)  # Inclui request.FILES para manipular arquivos
-        if form.is_valid():
-            form.save()  
-            return redirect('lista_vitimas')  
+def criar_vitima(request):
+    if request.method == 'POST':
+        # Processando o formulário de contato
+        lista_contatos_form = ListaContatosForm(request.POST)
+        vitima_form = VitimaForm(request.POST, request.FILES)
+        
+        if lista_contatos_form.is_valid() and vitima_form.is_valid():
+            # Salva o contato e a vítima
+            contato = lista_contatos_form.save()
+            vitima = vitima_form.save(commit=False)  # Não salva ainda a vítima
+            vitima.lista_contatos = contato  # Associa o contato à vítima
+            vitima.save()  # Agora salva a vítima
+            return redirect('lista_vitimas')  # Redireciona para a lista de vítimas após salvar
     else:
-        form = VitimaForm()  # Cria um novo formulário vazio
+        lista_contatos_form = ListaContatosForm()
+        vitima_form = VitimaForm()
 
-    return render(request, 'ocorrencias/create_vitima.html', {'form': form})
+    return render(request, 'ocorrencias/criar_vitima.html', {
+        'lista_contatos_form': lista_contatos_form,
+        'vitima_form': vitima_form,
+    })
 
 # Agressor Views
 def lista_agressores(request):

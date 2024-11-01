@@ -6,10 +6,17 @@
     <title>Criar Vítima</title>
 </head>
 <body>
+    <h1>Criar Contato</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ lista_contatos_form.as_p }}  <!-- Formulário para ListaContatos -->
+        <button type="submit">Criar Contato</button>
+    </form>
+
     <h1>Criar Vítima</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}  
+        {{ vitima_form.as_p }}  <!-- Formulário para Vitima -->
         <button type="submit">Criar Vítima</button>
     </form>
 </body>
