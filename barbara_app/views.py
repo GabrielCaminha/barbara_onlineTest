@@ -15,8 +15,8 @@ def create_vitima(request):
     if request.method == "POST":
         form = VitimaForm(request.POST, request.FILES)  # Inclui request.FILES para manipular arquivos
         if form.is_valid():
-            form.save()  # Salva a nova vítima no banco de dados
-            return redirect('lista_vitimas')  # Redireciona para a lista de vítimas após salvar
+            form.save()  
+            return redirect('lista_vitimas')  
     else:
         form = VitimaForm()  # Cria um novo formulário vazio
 
