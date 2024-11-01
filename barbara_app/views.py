@@ -2,23 +2,29 @@ from django.shortcuts import render, redirect
 from .models import Vitima, Agressor, Ocorrencia, BotaoPanico, Boletim_Ocorrencia, Denuncia, Formulario_Contato
 from .forms import VitimaForm, AgressorForm, OcorrenciaForm, Boletim_OcorrenciaForm, DenunciaForm, Formulario_ContatoForm
 
-from django.shortcuts import render
-
 def home(request):
     return render(request, 'ocorrencias/home.html')
-
 
 # Vítima Views
 def lista_vitimas(request):
     vitimas = Vitima.objects.all()
     return render(request, 'ocorrencias/lista_vitimas.html', {'vitimas': vitimas})
 
+def create_vitima(request):
+    if request.method == "POST":
+        form = VitimaForm(request.POST, request.FILES)  # Inclui request.FILES para manipular arquivos
+        if form.is_valid():
+            form.save()  # Salva a nova vítima no banco de dados
+            return redirect('lista_vitimas')  # Redireciona para a lista de vítimas após salvar
+    else:
+        form = VitimaForm()  # Cria um novo formulário vazio
+
+    return render(request, 'ocorrencias/create_vitima.html', {'form': form})
 
 # Agressor Views
 def lista_agressores(request):
     agressores = Agressor.objects.all()
     return render(request, 'ocorrencias/lista_agressores.html', {'agressores': agressores})
-
 
 # Ocorrência Views
 def lista_ocorrencias(request):
