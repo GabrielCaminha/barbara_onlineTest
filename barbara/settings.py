@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-import dj_database_url  # Verifique se esta biblioteca está instalada
+import dj_database_url  
 
 # Caminho base do projeto
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -9,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-mlds^g_)x*t1&a^jeb6n!-x)uyngnkk1btdn=yxp$%-w7&&716')
 
 # Modo de depuração (não use DEBUG=True em produção)
-DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
+DEBUG = True
 
 # Hosts permitidos
 ALLOWED_HOSTS = ['*']  # Qualquer host para desenvolvimento
@@ -22,7 +22,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'barbara_app',  # Seu aplicativo
+    'barbara_app',  
 ]
 
 # Middleware
@@ -61,14 +61,11 @@ WSGI_APPLICATION = 'barbara.wsgi.application'
 
 # Configuração do banco de dados
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',  # Adicione esta linha
-        'NAME': os.environ.get('DB_NAME', 'railway'),  # O nome do seu banco de dados
-        'USER': os.environ.get('DB_USER', 'postgres'),  # Seu usuário
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'zXlnsaSBPTswuernHFrjqvOuKgHsMFSE'),  # Sua senha
-        'HOST': os.environ.get('DB_HOST', 'postgres.railway.internal'),  # O host do seu banco
-        'PORT': os.environ.get('DB_PORT', '5432'),  # A porta do seu banco
-    }
+    'default': dj_database_url.config(
+        default = 'postgresql://postgres:LHhNbmOGcYLYbzEmMWbJrjyRIMrKlvmY@autorack.proxy.rlwy.net:22906/railway',
+        con_max_age = 600,
+        ssl_require = not DEBUG
+    )
 }
 
 # Validação de senhas
