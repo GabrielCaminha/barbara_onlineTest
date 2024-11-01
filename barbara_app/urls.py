@@ -8,5 +8,6 @@ urlpatterns = [
     path('restrito/agressores/', views.lista_agressores, name='lista_agressores'),
     path('restrito/ocorrencias/', views.lista_ocorrencias, name='lista_ocorrencias'),
     path('restrito/botao_panico/', views.lista_botoes_panico, name='botao_panico'),
+    path('restrito/criar_vitima/', views.create_vitima, name='create_vitima'),
     path('restrito/', views.restrito, name='restrito'),
 ]
