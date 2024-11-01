@@ -28,7 +28,7 @@ def create_vitima(request):
         lista_contatos_form = ListaContatosForm()
         vitima_form = VitimaForm()
 
-    return render(request, 'ocorrencias/criar_vitima.html', {
+    return render(request, 'ocorrencias/create_vitima.html', {
         'lista_contatos_form': lista_contatos_form,
         'vitima_form': vitima_form,
     })
