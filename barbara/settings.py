@@ -22,7 +22,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'barbara_app',
+    'barbara_app',  # Seu aplicativo
 ]
 
 # Middleware
@@ -61,9 +61,14 @@ WSGI_APPLICATION = 'barbara.wsgi.application'
 
 # Configuração do banco de dados
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL', 'postgresql://postgres:zXlnsaSBPTswuernHFrjqvOuKgHsMFSE@junction.proxy.rlwy.net:16805/railway')
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',  # Adicione esta linha
+        'NAME': os.environ.get('DB_NAME', 'railway'),  # O nome do seu banco de dados
+        'USER': os.environ.get('DB_USER', 'postgres'),  # Seu usuário
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'zXlnsaSBPTswuernHFrjqvOuKgHsMFSE'),  # Sua senha
+        'HOST': os.environ.get('DB_HOST', 'junction.proxy.rlwy.net'),  # O host do seu banco
+        'PORT': os.environ.get('DB_PORT', '16805'),  # A porta do seu banco
+    }
 }
 
 # Validação de senhas
