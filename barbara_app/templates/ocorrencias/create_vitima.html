@@ -6,18 +6,30 @@
     <title>Criar Vítima</title>
 </head>
 <body>
+    <h1>Criar Vítima</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Campo para selecionar um contato existente -->
+        <label for="contato_existente">Escolher Contato Existente:</label>
+        <select name="contato_existente" id="contato_existente">
+            <option value="">-- Selecione um contato --</option>
+            {% for contato in lista_contatos %}
+                <option value="{{ contato.id }}">{{ contato.contato_nome }} ({{ contato.contato_telefone }})</option>
+            {% endfor %}
+        </select>
+        <br><br>
+
+        <!-- Formulário para criar uma nova vítima -->
+        {{ vitima_form.as_p }}  <!-- Formulário para Vitima -->
+        <button type="submit">Criar Vítima</button>
+    </form>
+
     <h1>Criar Contato</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ lista_contatos_form.as_p }}  <!-- Formulário para ListaContatos -->
         <button type="submit">Criar Contato</button>
-    </form>
-
-    <h1>Criar Vítima</h1>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ vitima_form.as_p }}  <!-- Formulário para Vitima -->
-        <button type="submit">Criar Vítima</button>
     </form>
 </body>
 </html>
