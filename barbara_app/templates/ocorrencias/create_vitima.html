@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Criar Vítima e Contato</title>
+    <title>Criar Vítima</title>
 </head>
 <body>
     <h1>Criar Vítima</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
+        <!-- Campos da Vítima -->
         <label for="nome">Nome:</label>
         <input type="text" id="nome" name="nome" value="{{ vitima_form.nome.value|default_if_none:'' }}" required>
         {% if vitima_form.nome.errors %}
@@ -70,12 +71,6 @@
             <p style="color: red;">{{ vitima_form.ocupacao.errors }}</p>
         {% endif %}
 
-        <label for="telefone">Telefone:</label>
-        <input type="text" id="telefone" name="telefone" value="{{ vitima_form.telefone.value|default_if_none:'' }}" required>
-        {% if vitima_form.telefone.errors %}
-            <p style="color: red;">{{ vitima_form.telefone.errors }}</p>
-        {% endif %}
-
         <label for="estado_atual">Estado Atual:</label>
         <textarea id="estado_atual" name="estado_atual" required>{{ vitima_form.estado_atual.value|default_if_none:'' }}</textarea>
         {% if vitima_form.estado_atual.errors %}
@@ -88,35 +83,22 @@
         <label for="foto">Foto:</label>
         <input type="file" id="foto" name="foto" accept="image/*"><br>
 
-        <!-- Campo para selecionar um contato existente -->
-        <label for="contato_existente">Escolher Contato Existente:</label>
-        <select name="contato_existente" id="contato_existente">
-            <option value="">-- Selecione um contato --</option>
-            {% for contato in lista_contatos %}
-                <option value="{{ contato.id }}">{{ contato.contato_nome }} ({{ contato.contato_telefone }})</option>
-            {% endfor %}
-        </select>
-        <br><br>
-
-        <button type="submit">Criar Vítima</button>
-    </form>
-
-    <h1>Criar Contato</h1>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
+        <!-- Campos de Contato -->
+        <h2>Informações de Contato</h2>
         <label for="contato_nome">Nome do Contato:</label>
-        <input type="text" id="contato_nome" name="contato_nome" value="{{ lista_contatos_form.contato_nome.value|default_if_none:'' }}" required>
-        {% if lista_contatos_form.contato_nome.errors %}
-            <p style="color: red;">{{ lista_contatos_form.contato_nome.errors }}</p>
+        <input type="text" id="contato_nome" name="contato_nome" value="{{ vitima_form.contato_nome.value|default_if_none:'' }}" required>
+        {% if vitima_form.contato_nome.errors %}
+            <p style="color: red;">{{ vitima_form.contato_nome.errors }}</p>
         {% endif %}
 
         <label for="contato_telefone">Telefone do Contato:</label>
-        <input type="text" id="contato_telefone" name="contato_telefone" value="{{ lista_contatos_form.contato_telefone.value|default_if_none:'' }}" required>
-        {% if lista_contatos_form.contato_telefone.errors %}
-            <p style="color: red;">{{ lista_contatos_form.contato_telefone.errors }}</p>
+        <input type="text" id="contato_telefone" name="contato_telefone" value="{{ vitima_form.contato_telefone.value|default_if_none:'' }}" required>
+        {% if vitima_form.contato_telefone.errors %}
+            <p style="color: red;">{{ vitima_form.contato_telefone.errors }}</p>
         {% endif %}
 
-        <button type="submit">Criar Contato</button>
+        <br><br>
+        <button type="submit">Criar Vítima e Contato</button>
     </form>
 </body>
 </html>
