@@ -1,19 +1,20 @@
 import os
 from pathlib import Path
-import dj_database_url  # Você precisará instalar esta biblioteca
+import dj_database_url  # Verifique se esta biblioteca está instalada
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Caminho base do projeto
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
+# Chave secreta (mantenha-a segura em produção)
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-mlds^g_)x*t1&a^jeb6n!-x)uyngnkk1btdn=yxp$%-w7&&716')
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# Modo de depuração (não use DEBUG=True em produção)
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['*']  # Permite qualquer host para desenvolvimento
+# Hosts permitidos
+ALLOWED_HOSTS = ['*']  # Qualquer host para desenvolvimento
 
-# Application definition
+# Configurações dos aplicativos instalados
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -24,6 +25,7 @@ INSTALLED_APPS = [
     'barbara_app',
 ]
 
+# Middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -34,8 +36,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# Configuração das URLs principais
 ROOT_URLCONF = 'barbara.urls'
 
+# Configuração dos templates
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -52,16 +56,17 @@ TEMPLATES = [
     },
 ]
 
+# Aplicação WSGI
 WSGI_APPLICATION = 'barbara.wsgi.application'
 
-# Database
+# Configuração do banco de dados
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL', 'postgres://user:password@localhost/dbname')
+        default=os.environ.get('DATABASE_URL', 'postgresql://postgres:zXlnsaSBPTswuernHFrjqvOuKgHsMFSE@junction.proxy.rlwy.net:16805/railway')
     )
 }
 
-# Password validation
+# Validação de senhas
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -77,15 +82,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
+# Internacionalização
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
+# Arquivos estáticos
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # Adicione esta linha
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Default primary key field type
+# Tipo de chave primária padrão
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
