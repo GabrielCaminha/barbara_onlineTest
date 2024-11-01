@@ -11,7 +11,7 @@ def lista_vitimas(request):
     return render(request, 'ocorrencias/lista_vitimas.html', {'vitimas': vitimas})
 
 @csrf_exempt
-def criar_vitima(request):
+def create_vitima(request):
     if request.method == 'POST':
         # Processando o formulário de contato
         lista_contatos_form = ListaContatosForm(request.POST)
