@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Vitima, Agressor, Ocorrencia, BotaoPanico, Boletim_Ocorrencia, Denuncia, Formulario_Contato
 from .forms import VitimaForm, AgressorForm, OcorrenciaForm, Boletim_OcorrenciaForm, DenunciaForm, Formulario_ContatoForm
-
+from django.views.decorators.csrf import csrf_exempt
 def home(request):
     return render(request, 'ocorrencias/home.html')
 
@@ -10,6 +10,7 @@ def lista_vitimas(request):
     vitimas = Vitima.objects.all()
     return render(request, 'ocorrencias/lista_vitimas.html', {'vitimas': vitimas})
 
+@csrf_exempt
 def create_vitima(request):
     if request.method == "POST":
         form = VitimaForm(request.POST, request.FILES)  # Inclui request.FILES para manipular arquivos
