@@ -66,8 +66,8 @@ DATABASES = {
         'NAME': os.environ.get('DB_NAME', 'railway'),  # O nome do seu banco de dados
         'USER': os.environ.get('DB_USER', 'postgres'),  # Seu usuário
         'PASSWORD': os.environ.get('DB_PASSWORD', 'zXlnsaSBPTswuernHFrjqvOuKgHsMFSE'),  # Sua senha
-        'HOST': os.environ.get('DB_HOST', 'junction.proxy.rlwy.net'),  # O host do seu banco
-        'PORT': os.environ.get('DB_PORT', '16805'),  # A porta do seu banco
+        'HOST': os.environ.get('DB_HOST', 'postgres.railway.internal'),  # O host do seu banco
+        'PORT': os.environ.get('DB_PORT', '5432'),  # A porta do seu banco
     }
 }
 
