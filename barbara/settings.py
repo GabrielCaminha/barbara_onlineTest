@@ -63,7 +63,7 @@ WSGI_APPLICATION = 'barbara.wsgi.application'
 DATABASES = {
     'default': dj_database_url.config(
         default = 'postgresql://postgres:LHhNbmOGcYLYbzEmMWbJrjyRIMrKlvmY@autorack.proxy.rlwy.net:22906/railway',
-        con_max_age = 600,
+        conn_max_age = 600,
         ssl_require = not DEBUG
     )
 }
