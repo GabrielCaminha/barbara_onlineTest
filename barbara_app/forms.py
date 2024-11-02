@@ -11,22 +11,13 @@ class VitimaForm(forms.ModelForm):
     class Meta:
         model = Vitima
         fields = [
-            'nome', 
-            'nome_social', 
-            'data_nascimento',  
-            'cidade_nascimento',
-            'estado_nascimento',
-            'cpf', 
-            'rg', 
-            'email',
-            'endereco', 
-            'ocupacao', 
-            'telefone', 
-            'lista_contatos', 
-            'estado_atual', 
-            'medida_protetiva', 
-            'foto'  
+            'nome', 'nome_social', 'data_nascimento', 'cidade_nascimento', 'estado_nascimento',
+            'cpf', 'rg', 'email', 'endereco', 'ocupacao', 'telefone', 'lista_contatos',
+            'estado_atual', 'medida_protetiva', 'foto'
         ]
+        widgets = {
+            'data_nascimento': forms.DateInput(attrs={'type': 'date'}),
+        }
 
 class AgressorForm(forms.ModelForm):
     class Meta:

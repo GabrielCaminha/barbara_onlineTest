@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
-from .models import Vitima, Agressor, Ocorrencia, BotaoPanico, Boletim_Ocorrencia, Denuncia, Formulario_Contato
+from django.contrib import messages
+from .models import Vitima, Agressor, Ocorrencia, BotaoPanico, Boletim_Ocorrencia, Denuncia, Formulario_Contato, ListaContatos
 from .forms import VitimaForm, AgressorForm, OcorrenciaForm, Boletim_OcorrenciaForm, DenunciaForm, Formulario_ContatoForm, ListaContatosForm
 from django.views.decorators.csrf import csrf_exempt
+from django.forms import inlineformset_factory
 def home(request):
     return render(request, 'ocorrencias/home.html')
 
@@ -13,25 +15,30 @@ def lista_vitimas(request):
 @csrf_exempt
 def create_vitima(request):
     if request.method == 'POST':
-        # Processando o formulário de contato
-        lista_contatos_form = ListaContatosForm(request.POST)
-        vitima_form = VitimaForm(request.POST, request.FILES)
-        
-        if lista_contatos_form.is_valid() and vitima_form.is_valid():
-            # Salva o contato e a vítima
-            contato = lista_contatos_form.save()
-            vitima = vitima_form.save(commit=False)  # Não salva ainda a vítima
-            vitima.lista_contatos = contato  # Associa o contato à vítima
-            vitima.save()  # Agora salva a vítima
-            return redirect('lista_vitimas')  # Redireciona para a lista de vítimas após salvar
+        form = VitimaForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Vítima criada com sucesso!')
+            return redirect('lista_vitimas')  # Substitua pelo nome da URL da lista de vítimas, se existir
+        else:
+            messages.error(request, 'Erro ao criar vítima. Verifique os dados e tente novamente.')
     else:
-        lista_contatos_form = ListaContatosForm()
-        vitima_form = VitimaForm()
+        form = VitimaForm()
+    
+    return render(request, 'ocorrencias/create_vitima.html', {'form': form})
 
-    return render(request, 'ocorrencias/create_vitima.html', {
-        'lista_contatos_form': lista_contatos_form,
-        'vitima_form': vitima_form,
-    })
+@csrf_exempt
+def create_contato(request):
+    if request.method == 'POST':
+        form = ListaContatosForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Contato criado com sucesso!')
+            return redirect('create_vitima')  # Redireciona de volta para a página de criação da vítima
+        else:
+            messages.error(request, 'Erro ao criar contato. Verifique os dados e tente novamente.')
+
+    return redirect('ocorrencias/create_vitima')  # Caso não seja um POST, redireciona
 
 # Agressor Views
 def lista_agressores(request):

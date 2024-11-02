@@ -10,4 +10,5 @@ urlpatterns = [
     path('restrito/botao_panico/', views.lista_botoes_panico, name='botao_panico'),
     path('restrito/criar_vitima/', views.create_vitima, name='create_vitima'),
     path('restrito/', views.restrito, name='restrito'),
+    path('create_contato/', views.create_contato, name='create_contato'),
 ]
