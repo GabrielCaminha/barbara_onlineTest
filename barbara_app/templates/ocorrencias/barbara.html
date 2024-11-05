@@ -1,1512 +1,1511 @@
 <html><head><base href="https://sosmulher.policia.pe.gov.br/">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BARBARA - Unidade da Mulher</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
-<script>
-const WOMENS_ORGANIZATIONS = [
-    "Delegacia da Mulher (DEAM)",
-    "Centro de Referência da Mulher",
-    "Casa Abrigo",
-    "Defensoria Pública - Núcleo da Mulher", 
-    "Ministério Público - NAMVID",
-    "Secretaria da Mulher",
-    "Instituto Médico Legal (IML)",
-    "Juizado de Violência Doméstica",
-    "CREAS - Centro de Referência Especializado de Assistência Social",
-    "ONG SOS Mulher",
-    "Conselho Municipal dos Direitos da Mulher",
-    "Unidade Móvel de Atendimento à Mulher",
-    "Hospital da Mulher",
-    "Casa da Mulher Brasileira"
-];
-
-let violenceChart; // Global chart instance
-
-function openContactForm() {
-  const modalElement = document.getElementById('contactModal');
-  if (modalElement) {
-    const modal = new bootstrap.Modal(modalElement);
-    modal.show();
-  }
-}
-
-function openComplaintForm() {
-  const modalElement = document.getElementById('complaintModal');
-  if (modalElement) {
-    const modal = new bootstrap.Modal(modalElement);
-    modal.show();
-  }
-}
-
-function openRestrictedArea() {
-  window.location.href = "https://pablodiego.com.br/brunno/barbara/login.html";
-}
-
-function openBOForm() {
-  const modal = new bootstrap.Modal(document.getElementById('boModal'));
-  modal.show();
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BARBARA - Unidade da Mulher</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+  <script>
+  const WOMENS_ORGANIZATIONS = [
+      "Delegacia da Mulher (DEAM)",
+      "Centro de Referência da Mulher",
+      "Casa Abrigo",
+      "Defensoria Pública - Núcleo da Mulher", 
+      "Ministério Público - NAMVID",
+      "Secretaria da Mulher",
+      "Instituto Médico Legal (IML)",
+      "Juizado de Violência Doméstica",
+      "CREAS - Centro de Referência Especializado de Assistência Social",
+      "ONG SOS Mulher",
+      "Conselho Municipal dos Direitos da Mulher",
+      "Unidade Móvel de Atendimento à Mulher",
+      "Hospital da Mulher",
+      "Casa da Mulher Brasileira"
+  ];
   
-  let currentStep = 1;
-  const totalSteps = 5;
+  let violenceChart; // Global chart instance
   
-  const updateProgress = () => {
-    const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
-    document.getElementById('formProgress').style.width = `${progress}%`;
-  };
-
-  const showStep = (step) => {
-    document.querySelectorAll('.form-step').forEach(el => el.classList.add('d-none'));
-    document.getElementById(`step${step}`).classList.remove('d-none');
-    
-    const nextBtn = document.getElementById('nextStep');
-    const prevBtn = document.getElementById('prevStep');
-    const submitBtn = document.getElementById('submitBO');
-    
-    prevBtn.style.display = step === 1 ? 'none' : 'block';
-    nextBtn.style.display = step === totalSteps ? 'none' : 'block';
-    submitBtn.classList.toggle('d-none', step !== totalSteps);
-    
-    updateProgress();
-  };
-
-  document.getElementById('nextStep').addEventListener('click', () => {
-    if (currentStep < totalSteps) {
-      currentStep++;
-      showStep(currentStep);
+  function openContactForm() {
+    const modalElement = document.getElementById('contactModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
     }
-  });
-
-  document.getElementById('prevStep').addEventListener('click', () => {
-    if (currentStep > 1) {
-      currentStep--;
-      showStep(currentStep);
+  }
+  
+  function openComplaintForm() {
+    const modalElement = document.getElementById('complaintModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
     }
-  });
-
-  document.getElementById('boForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    Swal.fire({
-      title: 'Registro Enviado!',
-      text: 'Seu boletim de ocorrência foi registrado com sucesso.',
-      icon: 'success',
-      confirmButtonText: 'Ok'
-    }).then(() => {
-      modal.hide();
+  }
+  
+  function openRestrictedArea() {
+    window.location.href = "https://pablodiego.com.br/brunno/barbara/login.html";
+  }
+  
+  function openBOForm() {
+    const modal = new bootstrap.Modal(document.getElementById('boModal'));
+    modal.show();
+    
+    let currentStep = 1;
+    const totalSteps = 5;
+    
+    const updateProgress = () => {
+      const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
+      document.getElementById('formProgress').style.width = `${progress}%`;
+    };
+  
+    const showStep = (step) => {
+      document.querySelectorAll('.form-step').forEach(el => el.classList.add('d-none'));
+      document.getElementById(`step${step}`).classList.remove('d-none');
+      
+      const nextBtn = document.getElementById('nextStep');
+      const prevBtn = document.getElementById('prevStep');
+      const submitBtn = document.getElementById('submitBO');
+      
+      prevBtn.style.display = step === 1 ? 'none' : 'block';
+      nextBtn.style.display = step === totalSteps ? 'none' : 'block';
+      submitBtn.classList.toggle('d-none', step !== totalSteps);
+      
+      updateProgress();
+    };
+  
+    document.getElementById('nextStep').addEventListener('click', () => {
+      if (currentStep < totalSteps) {
+        currentStep++;
+        showStep(currentStep);
+      }
     });
-  });
-
-  // Show first step initially
-  showStep(1);
-
-  // Handle children fields visibility
-  document.querySelectorAll('input[name="hasChildren"]').forEach(radio => {
-    radio.addEventListener('change', (e) => {
-      const childrenCount = document.getElementById('childrenCount');
-      childrenCount.style.display = e.target.value === 'yes' ? 'block' : 'none';
+  
+    document.getElementById('prevStep').addEventListener('click', () => {
+      if (currentStep > 1) {
+        currentStep--;
+        showStep(currentStep);
+      }
     });
-  });
-}
-</script>
-<script type="module">
-  import Typebot from 'https://cdn.jsdelivr.net/npm/@typebot.io/js@0.3.12/dist/web.js'
-
-  Typebot.initBubble({
-    typebot: "barbara",
-    apiHost: "https://viewer.2n4p3z.easypanel.host",
-    previewMessage: {
-      message: "Eu sou a Barbara, Posso ajudar você ?",
-      autoShowDelay: 3000,
-      avatarUrl: "https://pablodiego.com.br/brunno/barbara/2.png",
-    },
-    theme: {
-      button: { backgroundColor: "#D27A7D" },
-      chatWindow: {
-        backgroundColor: "https://builder.2n4p3z.easypanel.host/images/backgrounds/brightRain.jpeg",
+  
+    document.getElementById('boForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      Swal.fire({
+        title: 'Registro Enviado!',
+        text: 'Seu boletim de ocorrência foi registrado com sucesso.',
+        icon: 'success',
+        confirmButtonText: 'Ok'
+      }).then(() => {
+        modal.hide();
+      });
+    });
+  
+    // Show first step initially
+    showStep(1);
+  
+    // Handle children fields visibility
+    document.querySelectorAll('input[name="hasChildren"]').forEach(radio => {
+      radio.addEventListener('change', (e) => {
+        const childrenCount = document.getElementById('childrenCount');
+        childrenCount.style.display = e.target.value === 'yes' ? 'block' : 'none';
+      });
+    });
+  }
+  </script>
+  <script type="module">
+    import Typebot from 'https://cdn.jsdelivr.net/npm/@typebot.io/js@0.3.12/dist/web.js'
+  
+    Typebot.initBubble({
+      typebot: "barbara",
+      apiHost: "https://viewer.2n4p3z.easypanel.host",
+      previewMessage: {
+        message: "Eu sou a Barbara, Posso ajudar você ?",
+        autoShowDelay: 3000,
+        avatarUrl: "https://pablodiego.com.br/brunno/barbara/2.png",
       },
-    },
-  });
-</script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBrBjABmwoz3IG9kBwLYS1wrrRvWRDQhJg&libraries=places,geometry" async defer></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<style>
-  :root {
-    --primary-color: #6a0dad;
-    --secondary-color: #4caf50;
-    --accent-color: #8e44ad;
-    --text-color: #333333;
-    --light-bg: #f0f0f0;
-    --dark-bg: #4a0e4e;
-  }
-
-  body {
-    font-family: 'Poppins', sans-serif;
-    color: var(--text-color);
-    line-height: 1.8;
-    background-color: var(--light-bg);
-  }
-
-  .navbar {
-    background-color: var(--dark-bg);
-    padding: 1rem 0;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
-
-  .navbar-brand, .nav-link {
-    color: white !important;
-    font-weight: 600;
-    transition: color 0.3s ease;
-  }
-
-  .nav-link:hover {
-    color: var(--accent-color) !important;
-  }
-
-  .nav-link.restricted-area {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 5px;
-    padding: 8px 15px !important;
-    margin-left: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  .nav-link.restricted-area:hover {
-    background-color: rgba(255, 255, 255, 0.2) !important;
-    color: #fff !important;
-    transform: translateY(-1px);
-    transition: all 0.3s ease;
-  }
-
-  .nav-link.restricted-area i {
-    font-size: 14px;
-    color: #ffd700;
-  }
-
-  .logo {
-    max-height: 50px;
-    margin-right: 10px;
-  }
-
-  .hero {
-    background: linear-gradient(rgba(106, 13, 173, 0.8), rgba(76, 175, 80, 0.8)), url('https://example.com/hero-image.jpg');
-    background-size: cover;
-    background-position: center;
-    color: white;
-    padding: 150px 0;
-    text-align: center;
-  }
-
-  .hero h1 {
-    font-size: 3.5rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-  }
-
-  .hero p {
-    font-size: 1.25rem;
-    margin-bottom: 2rem;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-  }
-
-  .hero .btn-light {
-    background-color: rgba(255,255,255,0.9);
-    color: var(--primary-color);
-    font-weight: 600;
-    transition: all 0.3s ease;
-  }
-
-  .hero .btn-light:hover {
-    background-color: white;
-    transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  }
-
-  .section-title {
-    color: var(--primary-color);
-    font-weight: 700;
-    margin-bottom: 2rem;
-    position: relative;
-    display: inline-block;
-  }
-
-  .section-title::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 0;
-    width: 50%;
-    height: 3px;
-    background-color: var(--secondary-color);
-  }
-
-  .card {
-    border: none;
-    border-radius: 15px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    overflow: hidden;
-  }
-
-  .card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-  }
-
-  .card-body {
-    padding: 2rem;
-  }
-
-  .card-title {
-    color: var(--primary-color);
-    font-weight: 600;
-  }
-
-  .form-control {
-    border-radius: 10px;
-    padding: 0.75rem 1rem;
-    border: 1px solid #ced4da;
-  }
-
-  .form-control:focus {
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 0.2rem rgba(253, 121, 168, 0.25);
-  }
-
-  .btn-primary {
-    background-color: var(--secondary-color);
-    border-color: var(--secondary-color);
-    border-radius: 10px;
-    padding: 0.75rem 2rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-  }
-
-  .btn-primary:hover {
-    background-color: #45a049;
-    border-color: #45a049;
-    transform: translateY(-2px);
-  }
-
-  .footer {
-    background-color: var(--dark-bg);
-    color: white;
-    padding: 3rem 0;
-  }
-
-  @media (max-width: 991.98px) {
-    .navbar-collapse {
+      theme: {
+        button: { backgroundColor: "#D27A7D" },
+        chatWindow: {
+          backgroundColor: "https://builder.2n4p3z.easypanel.host/images/backgrounds/brightRain.jpeg",
+        },
+      },
+    });
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBrBjABmwoz3IG9kBwLYS1wrrRvWRDQhJg&libraries=places,geometry" async defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --primary-color: #6a0dad;
+      --secondary-color: #4caf50;
+      --accent-color: #8e44ad;
+      --text-color: #333333;
+      --light-bg: #f0f0f0;
+      --dark-bg: #4a0e4e;
+    }
+  
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--text-color);
+      line-height: 1.8;
+      background-color: var(--light-bg);
+    }
+  
+    .navbar {
       background-color: var(--dark-bg);
-      padding: 1rem;
-      border-radius: 0.5rem;
-      margin-top: 1rem;
+      padding: 1rem 0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-
-    .navbar-nav {
-      gap: 0.5rem;
+  
+    .navbar-brand, .nav-link {
+      color: white !important;
+      font-weight: 600;
+      transition: color 0.3s ease;
     }
-
-    .nav-link {
-      padding: 0.5rem 1rem !important;
+  
+    .nav-link:hover {
+      color: var(--accent-color) !important;
     }
-
+  
     .nav-link.restricted-area {
-      margin: 0.5rem 0;
-      justify-content: center;
-    }
-
-    .navbar-toggler {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+      padding: 8px 15px !important;
+      margin-left: 10px;
       border: 1px solid rgba(255, 255, 255, 0.3);
-      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
     }
-
-    .navbar-toggler:focus {
-      box-shadow: none;
-      outline: none;
+  
+    .nav-link.restricted-area:hover {
+      background-color: rgba(255, 255, 255, 0.2) !important;
+      color: #fff !important;
+      transform: translateY(-1px);
+      transition: all 0.3s ease;
     }
-
-    .navbar-brand {
-      max-width: 200px;
-      white-space: nowrap;
+  
+    .nav-link.restricted-area i {
+      font-size: 14px;
+      color: #ffd700;
+    }
+  
+    .logo {
+      max-height: 50px;
+      margin-right: 10px;
+    }
+  
+    .hero {
+      background: linear-gradient(rgba(106, 13, 173, 0.8), rgba(76, 175, 80, 0.8)), url('https://example.com/hero-image.jpg');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 150px 0;
+      text-align: center;
+    }
+  
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+  
+    .hero p {
+      font-size: 1.25rem;
+      margin-bottom: 2rem;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    }
+  
+    .hero .btn-light {
+      background-color: rgba(255,255,255,0.9);
+      color: var(--primary-color);
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+  
+    .hero .btn-light:hover {
+      background-color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+  
+    .section-title {
+      color: var(--primary-color);
+      font-weight: 700;
+      margin-bottom: 2rem;
+      position: relative;
+      display: inline-block;
+    }
+  
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 50%;
+      height: 3px;
+      background-color: var(--secondary-color);
+    }
+  
+    .card {
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       overflow: hidden;
-      text-overflow: ellipsis;
     }
-  }
-
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
+  
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
     }
-    to {
-      opacity: 1;
-      transform: translateY(0);
+  
+    .card-body {
+      padding: 2rem;
     }
-  }
-
-  .fade-in {
-    animation: fadeInUp 0.6s ease-out;
-  }
-
-  #violenceChart {
-    max-width: 100%;
-    height: 400px;
-    margin-top: 2rem;
-  }
-
-  .login-form {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    display: flex;
-    align-items: center;
-    z-index: 1000;
-  }
-
-  .login-form input {
-    margin-right: 5px;
-    border-radius: 5px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    background-color: rgba(255, 255, 255, 0.1);
-    color: white;
-    padding: 5px 10px;
-    font-size: 0.8rem;
-    width: 120px;
-  }
-
-  .login-form input::placeholder {
-    color: rgba(255, 255, 255, 0.7);
-  }
-
-  .login-form button {
-    background-color: transparent;
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-size: 0.8rem;
-  }
-
-  .login-form button:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-  }
-
-  .service-options {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-  }
-
-  .service-option {
-    background-color: #ffffff;
-    border-radius: 15px;
-    padding: 2rem;
-    text-align: center;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-  }
-
-  .service-option:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-  }
-
-  .service-option i {
-    font-size: 3rem;
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-  }
-
-  .service-option h3 {
-    color: var(--secondary-color);
-    margin-bottom: 1rem;
-  }
-
-  .news-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-  }
-
-  .news-item {
-    background-color: #ffffff;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .news-item:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-  }
-
-  .news-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-  }
-
-  .news-content {
-    padding: 1.5rem;
-  }
-
-  .news-item h3 {
-    color: var(--primary-color);
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .news-item p {
-    color: var(--text-color);
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-  }
-
-  .news-item .date {
-    color: var(--secondary-color);
-    font-size: 0.8rem;
-    font-weight: 600;
-  }
-
-  @media (max-width: 992px) {
+  
+    .card-title {
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+  
+    .form-control {
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      border: 1px solid #ced4da;
+    }
+  
+    .form-control:focus {
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 0.2rem rgba(253, 121, 168, 0.25);
+    }
+  
+    .btn-primary {
+      background-color: var(--secondary-color);
+      border-color: var(--secondary-color);
+      border-radius: 10px;
+      padding: 0.75rem 2rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+  
+    .btn-primary:hover {
+      background-color: #45a049;
+      border-color: #45a049;
+      transform: translateY(-2px);
+    }
+  
+    .footer {
+      background-color: var(--dark-bg);
+      color: white;
+      padding: 3rem 0;
+    }
+  
+    @media (max-width: 991.98px) {
+      .navbar-collapse {
+        background-color: var(--dark-bg);
+        padding: 1rem;
+        border-radius: 0.5rem;
+        margin-top: 1rem;
+      }
+  
+      .navbar-nav {
+        gap: 0.5rem;
+      }
+  
+      .nav-link {
+        padding: 0.5rem 1rem !important;
+      }
+  
+      .nav-link.restricted-area {
+        margin: 0.5rem 0;
+        justify-content: center;
+      }
+  
+      .navbar-toggler {
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 0.5rem;
+      }
+  
+      .navbar-toggler:focus {
+        box-shadow: none;
+        outline: none;
+      }
+  
+      .navbar-brand {
+        max-width: 200px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  
+    .fade-in {
+      animation: fadeInUp 0.6s ease-out;
+    }
+  
+    #violenceChart {
+      max-width: 100%;
+      height: 400px;
+      margin-top: 2rem;
+    }
+  
     .login-form {
-      position: static;
-      justify-content: flex-end;
-      margin-top: 10px;
-      padding-right: 15px;
-    }
-
-    .navbar-toggler {
       position: absolute;
       top: 10px;
       right: 10px;
+      display: flex;
+      align-items: center;
+      z-index: 1000;
     }
-  }
-
-  @media (max-width: 768px) {
-    .hero {
-      padding: 100px 0;
-    }
-
-    .hero h1 {
-      font-size: 2.5rem;
-    }
-
-    .section-title {
-      font-size: 1.8rem;
-    }
-
-    .card-body {
-      padding: 1.5rem;
-    }
-
-    #violenceChart {
-      height: 300px;
-    }
-
-    .service-option {
-      flex-basis: 100%;
-    }
-
-    .news-container {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  @media (max-width: 576px) {
-    .hero h1 {
-      font-size: 2rem;
-    }
-
-    .hero p {
-      font-size: 1rem;
-    }
-
-    .section-title {
-      font-size: 1.5rem;
-    }
-
-    .card-body {
-      padding: 1rem;
-    }
-
-    .modal-dialog {
-      max-width: 800px;
-    }
-
-    .modal-content {
-      border-radius: 15px;
-      border: none;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    }
-
-    .modal-header {
-      background-color: var(--primary-color);
+  
+    .login-form input {
+      margin-right: 5px;
+      border-radius: 5px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background-color: rgba(255, 255, 255, 0.1);
       color: white;
-      border-radius: 15px 15px 0 0;
+      padding: 5px 10px;
+      font-size: 0.8rem;
+      width: 120px;
     }
-
-    .btn-close {
-      filter: brightness(0) invert(1);
+  
+    .login-form input::placeholder {
+      color: rgba(255, 255, 255, 0.7);
     }
-
-    #deamMap {
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  
+    .login-form button {
+      background-color: transparent;
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-size: 0.8rem;
     }
-
-    #deamList .list-group-item {
-      border-left: 4px solid var(--primary-color);
+  
+    .login-form button:hover {
+      background-color: rgba(255, 255, 255, 0.1);
     }
-
-    #deamLocatorModal .modal-body {
-      padding: 20px;
+  
+    .service-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
     }
-
-    .progress {
-      height: 8px;
-      background-color: #f0f0f0;
-    }
-
-    .progress-bar {
-      background-color: var(--primary-color);
-      transition: width 0.3s ease;
-    }
-
-    .form-step {
+  
+    .service-option {
+      background-color: #ffffff;
+      border-radius: 15px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
       transition: all 0.3s ease;
     }
-
-    .form-step.d-none {
-      display: none;
+  
+    .service-option:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
     }
-
-    #boModal .modal-header {
-      background-color: var(--primary-color);
+  
+    .service-option i {
+      font-size: 3rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
     }
-
-    #boModal .modal-content {
+  
+    .service-option h3 {
+      color: var(--secondary-color);
+      margin-bottom: 1rem;
+    }
+  
+    .news-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+  
+    .news-item {
+      background-color: #ffffff;
       border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-
-    #boModal .form-label {
-      font-weight: 500;
+  
+    .news-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
     }
-
-    #boModal .alert {
-      border-radius: 10px;
+  
+    .news-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
     }
-  }
-</style>
-</head>
-<body>
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="#">
-        <img src="https://pablodiego.com.br/brunno/barbara/log.png" alt="Logo Unidade da Mulher" class="logo">
-        Unidade da Mulher
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="#home">Início</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#servicos">Serviços</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#noticias">Notícias</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#estatisticas">Estatísticas</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#recursos">Recursos</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#app-centralizado">Aplicativo</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#" onclick="openContactForm()">Contato</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#" onclick="openComplaintForm()">Denúncia</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link restricted-area" href="#" onclick="openRestrictedArea()">
-              <i class="fas fa-lock"></i> Área Restrita
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <section id="home" class="hero">
-    <div class="container fade-in">
-      <h1>Unidade da Mulher - Proteção e Apoio</h1>
-      <p class="lead">Dedicados a garantir sua segurança e bem-estar. Estamos aqui para ajudar mulheres vítimas de abuso e prevenir o feminicídio. Não hesite em buscar ajuda.</p>
-      <a href="#servicos" class="btn btn-lg btn-light">Conheça Nossos Serviços de Apoio</a>
-    </div>
-  </section>
-
-  <section id="servicos" class="py-5">
-    <div class="container fade-in">
-      <h2 class="section-title text-center mb-5">Nossos Serviços de Proteção e Apoio</h2>
-      <p class="text-center mb-5">Oferecemos uma variedade de serviços para apoiar e proteger mulheres em situação de vulnerabilidade, abuso ou risco de feminicídio. Nossa missão é garantir sua segurança e bem-estar.</p>
-      <div class="service-options">
-        <div class="service-option">
-          <i class="fas fa-file-alt"></i>
-          <h3>Boletim de Ocorrência Online</h3>
-          <p>Registre sua ocorrência de forma rápida e segura, sem sair de casa.</p>
-          <a href="#" class="btn btn-primary" onclick="openBOForm()">Registrar BO</a>
-        </div>
-        <div class="service-option">
-          <i class="far fa-calendar-alt"></i>
-          <h3>Agendamento de Atendimento</h3>
-          <p>Marque um horário para atendimento presencial em uma de nossas unidades.</p>
-          <a href="#" class="btn btn-primary" onclick="openScheduleForm()">Agendar</a>
-        </div>
-        <div class="service-option">
-          <i class="fas fa-video"></i>
-          <h3>Atendimento por Videochamada</h3>
-          <p>Receba atendimento especializado através de uma videochamada segura.</p>
-          <a href="#" class="btn btn-primary" onclick="openVideoCallForm()">Solicitar Videochamada</a>
-        </div>
-        <div class="service-option">
-          <i class="fas fa-map-marker-alt"></i>
-          <h3>Localização de DEAMs</h3>
-          <p>Encontre a Delegacia Especializada de Atendimento à Mulher mais próxima de você.</p>
-          <a href="#" class="btn btn-primary" onclick="openDEAMLocator()">Localizar DEAM</a>
-        </div>
-        <div class="service-option">
-          <i class="fas fa-briefcase"></i>
-          <h3>Qualificação Profissional</h3>
-          <p>Conheça nossos programas de qualificação profissional e geração de renda.</p>
-          <a href="#" class="btn btn-primary" onclick="openProfessionalQualification()">Saiba Mais</a>
-        </div>
-        <div class="service-option">
-          <i class="fas fa-heartbeat"></i>
-          <h3>Serviços de Saúde</h3>
-          <p>Acesse informações sobre serviços de saúde especializados para mulheres.</p>
-          <a href="#" class="btn btn-primary" onclick="openHealthServices()">Ver Serviços</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="estatisticas" class="py-5">
-    <div class="container fade-in">
-      <h2 class="section-title text-center mb-5">Estatísticas de Violência Contra a Mulher e Atendimentos</h2>
-      <div class="row justify-content-center">
-        <div class="col-md-10">
-          <canvas id="violenceChart"></canvas>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="noticias" class="py-5 bg-light">
-    <div class="container fade-in">
-      <h2 class="section-title text-center mb-5">Últimas Notícias e Ações</h2>
-      <div class="news-container" id="newsContainer">
-      </div>
-    </div>
-  </section>
-
-  <section id="recursos" class="py-5">
-    <div class="container fade-in">
-      <h2 class="section-title text-center mb-5">Recursos e Contatos</h2>
-      <div class="row">
-        <div class="col-md-4 mb-4">
-          <div class="card h-100 resource-card">
-            <div class="card-body text-center">
-              <i class="fas fa-phone fa-3x text-primary mb-3"></i>
-              <h5 class="card-title">Disque Denúncia</h5>
-              <p class="card-text">Ligue 197 para denunciar casos de violência contra a mulher.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 mb-4">
-          <div class="card h-100 resource-card">
-            <div class="card-body text-center">
-              <i class="fas fa-comments fa-3x text-primary mb-3"></i>
-              <h5 class="card-title">Chat Online</h5>
-              <p class="card-text">Converse com uma atendente especializada através do nosso chat online.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 mb-4">
-          <div class="card h-100 resource-card">
-            <div class="card-body text-center">
-              <i class="fas fa-book fa-3x text-primary mb-3"></i>
-              <h5 class="card-title">Cartilha Informativa</h5>
-              <p class="card-text">Baixe nossa cartilha com informações sobre seus direitos e como se proteger.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="app-centralizado" class="py-5 bg-light">
-    <div class="container fade-in">
-      <h2 class="section-title text-center mb-5">Aplicativo Centralizado</h2>
-      <div class="row">
-        <div class="col-md-6">
-          <h3>Recursos do Aplicativo</h3>
-          <ul>
-            <li>Mapa interativo com localização dos serviços</li>
-            <li>Sistema de agendamento para consultas e atendimentos</li>
-            <li>Informações detalhadas sobre cada serviço disponível</li>
-            <li>Canal de denúncias e pedidos de ajuda emergencial</li>
-            <li>Seção educativa com informações sobre direitos das mulheres</li>
-            <li>Notificações sobre eventos e programas relevantes</li>
+  
+    .news-content {
+      padding: 1.5rem;
+    }
+  
+    .news-item h3 {
+      color: var(--primary-color);
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+  
+    .news-item p {
+      color: var(--text-color);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+  
+    .news-item .date {
+      color: var(--secondary-color);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+  
+    @media (max-width: 992px) {
+      .login-form {
+        position: static;
+        justify-content: flex-end;
+        margin-top: 10px;
+        padding-right: 15px;
+      }
+  
+      .navbar-toggler {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+      }
+    }
+  
+    @media (max-width: 768px) {
+      .hero {
+        padding: 100px 0;
+      }
+  
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+  
+      .section-title {
+        font-size: 1.8rem;
+      }
+  
+      .card-body {
+        padding: 1.5rem;
+      }
+  
+      #violenceChart {
+        height: 300px;
+      }
+  
+      .service-option {
+        flex-basis: 100%;
+      }
+  
+      .news-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  
+    @media (max-width: 576px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+  
+      .hero p {
+        font-size: 1rem;
+      }
+  
+      .section-title {
+        font-size: 1.5rem;
+      }
+  
+      .card-body {
+        padding: 1rem;
+      }
+  
+      .modal-dialog {
+        max-width: 800px;
+      }
+  
+      .modal-content {
+        border-radius: 15px;
+        border: none;
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      }
+  
+      .modal-header {
+        background-color: var(--primary-color);
+        color: white;
+        border-radius: 15px 15px 0 0;
+      }
+  
+      .btn-close {
+        filter: brightness(0) invert(1);
+      }
+  
+      #deamMap {
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+  
+      #deamList .list-group-item {
+        border-left: 4px solid var(--primary-color);
+      }
+  
+      #deamLocatorModal .modal-body {
+        padding: 20px;
+      }
+  
+      .progress {
+        height: 8px;
+        background-color: #f0f0f0;
+      }
+  
+      .progress-bar {
+        background-color: var(--primary-color);
+        transition: width 0.3s ease;
+      }
+  
+      .form-step {
+        transition: all 0.3s ease;
+      }
+  
+      .form-step.d-none {
+        display: none;
+      }
+  
+      #boModal .modal-header {
+        background-color: var(--primary-color);
+      }
+  
+      #boModal .modal-content {
+        border-radius: 15px;
+      }
+  
+      #boModal .form-label {
+        font-weight: 500;
+      }
+  
+      #boModal .alert {
+        border-radius: 10px;
+      }
+    }
+  </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img src="https://pablodiego.com.br/brunno/barbara/log.png" alt="Logo Unidade da Mulher" class="logo">
+          Unidade da Mulher
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" -controls="navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#home">Início</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#servicos">Serviços</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#noticias">Notícias</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#estatisticas">Estatísticas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#recursos">Recursos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#app-centralizado">Aplicativo</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" onclick="openContactForm()">Contato</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" onclick="openComplaintForm()">Denúncia</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link restricted-area" href="#" onclick="openRestrictedArea()">
+                <i class="fas fa-lock"></i> Área Restrita
+              </a>
+            </li>
           </ul>
         </div>
-        <div class="col-md-6">
-          <img src="https://pablodiego.com.br/brunno/barbara/celular.jpeg" alt="Mockup do aplicativo centralizado" class="img-fluid rounded">
+      </div>
+    </nav>
+  
+    <section id="home" class="hero">
+      <div class="container fade-in">
+        <h1>Unidade da Mulher - Proteção e Apoio</h1>
+        <p class="lead">Dedicados a garantir sua segurança e bem-estar. Estamos aqui para ajudar mulheres vítimas de abuso e prevenir o feminicídio. Não hesite em buscar ajuda.</p>
+        <a href="#servicos" class="btn btn-lg btn-light">Conheça Nossos Serviços de Apoio</a>
+      </div>
+    </section>
+  
+    <section id="servicos" class="py-5">
+      <div class="container fade-in">
+        <h2 class="section-title text-center mb-5">Nossos Serviços de Proteção e Apoio</h2>
+        <p class="text-center mb-5">Oferecemos uma variedade de serviços para apoiar e proteger mulheres em situação de vulnerabilidade, abuso ou risco de feminicídio. Nossa missão é garantir sua segurança e bem-estar.</p>
+        <div class="service-options">
+          <div class="service-option">
+            <i class="fas fa-file-alt"></i>
+            <h3>Boletim de Ocorrência Online</h3>
+            <p>Registre sua ocorrência de forma rápida e segura, sem sair de casa.</p>
+            <a href="#" class="btn btn-primary" onclick="openBOForm()">Registrar BO</a>
+          </div>
+          <div class="service-option">
+            <i class="far fa-calendar-alt"></i>
+            <h3>Agendamento de Atendimento</h3>
+            <p>Marque um horário para atendimento presencial em uma de nossas unidades.</p>
+            <a href="#" class="btn btn-primary" onclick="openScheduleForm()">Agendar</a>
+          </div>
+          <div class="service-option">
+            <i class="fas fa-video"></i>
+            <h3>Atendimento por Videochamada</h3>
+            <p>Receba atendimento especializado através de uma videochamada segura.</p>
+            <a href="#" class="btn btn-primary" onclick="openVideoCallForm()">Solicitar Videochamada</a>
+          </div>
+          <div class="service-option">
+            <i class="fas fa-map-marker-alt"></i>
+            <h3>Localização de DEAMs</h3>
+            <p>Encontre a Delegacia Especializada de Atendimento à Mulher mais próxima de você.</p>
+            <a href="#" class="btn btn-primary" onclick="openDEAMLocator()">Localizar DEAM</a>
+          </div>
+          <div class="service-option">
+            <i class="fas fa-briefcase"></i>
+            <h3>Qualificação Profissional</h3>
+            <p>Conheça nossos programas de qualificação profissional e geração de renda.</p>
+            <a href="#" class="btn btn-primary" onclick="openProfessionalQualification()">Saiba Mais</a>
+          </div>
+          <div class="service-option">
+            <i class="fas fa-heartbeat"></i>
+            <h3>Serviços de Saúde</h3>
+            <p>Acesse informações sobre serviços de saúde especializados para mulheres.</p>
+            <a href="#" class="btn btn-primary" onclick="openHealthServices()">Ver Serviços</a>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <footer class="footer">
-    <div class="container text-center">
-      <p>&copy; 2024 Barbara - Unidade da Mulher. Dedicadas à proteção e apoio das mulheres. Todos os direitos reservados.</p>
-    </div>
-  </footer>
-
-  <div class="modal fade" id="contactModal" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Formulário de Contato</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          <form id="contactForm">
-            <div class="mb-3">
-              <label class="form-label">Órgão a que se destina</label>
-              <select class="form-select" required>
-                <option value="">Selecione o órgão</option>
-              </select>
-            </div>
-            <div class="row">
-              <div class="col-md-6 mb-3">
-                <label class="form-label">Para quem</label>
-                <input type="text" class="form-control" required placeholder="Nome do destinatário">
-              </div>
-              <div class="col-md-6 mb-3">
-                <label class="form-label">Assunto</label>
-                <input type="text" class="form-control" required placeholder="Assunto do contato">
-              </div>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Conteúdo</label>
-              <textarea class="form-control" rows="4" required placeholder="Descreva sua mensagem"></textarea>
-            </div>
-            <div class="row">
-              <div class="col-md-4 mb-3">
-                <label class="form-label">Email do remetente</label>
-                <input type="email" class="form-control" required placeholder="seu@email.com">
-              </div>
-              <div class="col-md-4 mb-3">
-                <label class="form-label">Telefone do remetente</label>
-                <input type="tel" class="form-control" required placeholder="(00) 00000-0000">
-              </div>
-              <div class="col-md-4 mb-3">
-                <label class="form-label">Nome do remetente</label>
-                <input type="text" class="form-control" required placeholder="Seu nome completo">
-              </div>
-            </div>
-            <div class="mb-3 form-check">
-              <input type="checkbox" class="form-check-input" id="sendCopy">
-              <label class="form-check-label">Enviar cópia para meu email</label>
-            </div>
-            <div class="d-flex gap-2 justify-content-end">
-              <button type="reset" class="btn btn-secondary">Limpar</button>
-              <button type="submit" class="btn btn-primary">Enviar</button>
-            </div>
-          </form>
+    </section>
+  
+    <section id="estatisticas" class="py-5">
+      <div class="container fade-in">
+        <h2 class="section-title text-center mb-5">Estatísticas de Violência Contra a Mulher e Atendimentos</h2>
+        <div class="row justify-content-center">
+          <div class="col-md-10">
+            <canvas id="violenceChart"></canvas>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="complaintModal" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Formulário de Denúncia</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+    </section>
+  
+    <section id="noticias" class="py-5 bg-light">
+      <div class="container fade-in">
+        <h2 class="section-title text-center mb-5">Últimas Notícias e Ações</h2>
+        <div class="news-container" id="newsContainer">
         </div>
-        <div class="modal-body">
-          <form id="complaintForm">
-            <div class="alert alert-info mb-3">
-              <i class="fas fa-info-circle"></i> Você pode fazer uma denúncia anônima marcando a opção abaixo.
+      </div>
+    </section>
+  
+    <section id="recursos" class="py-5">
+      <div class="container fade-in">
+        <h2 class="section-title text-center mb-5">Recursos e Contatos</h2>
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <div class="card h-100 resource-card">
+              <div class="card-body text-center">
+                <i class="fas fa-phone fa-3x text-primary mb-3"></i>
+                <h5 class="card-title">Disque Denúncia</h5>
+                <p class="card-text">Ligue 197 para denunciar casos de violência contra a mulher.</p>
+              </div>
             </div>
-            <div class="mb-3 form-check">
-              <input type="checkbox" class="form-check-input" id="anonymous">
-              <label class="form-check-label">Denúncia Anônima</label>
+          </div>
+          <div class="col-md-4 mb-4">
+            <div class="card h-100 resource-card">
+              <div class="card-body text-center">
+                <i class="fas fa-comments fa-3x text-primary mb-3"></i>
+                <h5 class="card-title">Chat Online</h5>
+                <p class="card-text">Converse com uma atendente especializada através do nosso chat online.</p>
+              </div>
             </div>
-            <div class="mb-3">
-              <label class="form-label">Órgão a que se destina</label>
-              <select class="form-select" required>
-                <option value="">Selecione o órgão</option>
-              </select>
+          </div>
+          <div class="col-md-4 mb-4">
+            <div class="card h-100 resource-card">
+              <div class="card-body text-center">
+                <i class="fas fa-book fa-3x text-primary mb-3"></i>
+                <h5 class="card-title">Cartilha Informativa</h5>
+                <p class="card-text">Baixe nossa cartilha com informações sobre seus direitos e como se proteger.</p>
+              </div>
             </div>
-            <div id="personalInfo">
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <section id="app-centralizado" class="py-5 bg-light">
+      <div class="container fade-in">
+        <h2 class="section-title text-center mb-5">Aplicativo Centralizado</h2>
+        <div class="row">
+          <div class="col-md-6">
+            <h3>Recursos do Aplicativo</h3>
+            <ul>
+              <li>Mapa interativo com localização dos serviços</li>
+              <li>Sistema de agendamento para consultas e atendimentos</li>
+              <li>Informações detalhadas sobre cada serviço disponível</li>
+              <li>Canal de denúncias e pedidos de ajuda emergencial</li>
+              <li>Seção educativa com informações sobre direitos das mulheres</li>
+              <li>Notificações sobre eventos e programas relevantes</li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <img src="https://pablodiego.com.br/brunno/barbara/celular.jpeg" alt="Mockup do aplicativo centralizado" class="img-fluid rounded">
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <footer class="footer">
+      <div class="container text-center">
+        <p>&copy; 2024 Barbara - Unidade da Mulher. Dedicadas à proteção e apoio das mulheres. Todos os direitos reservados.</p>
+      </div>
+    </footer>
+  
+    <div class="modal fade" id="contactModal" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Formulário de Contato</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <form id="contactForm">
+              <div class="mb-3">
+                <label class="form-label">Órgão a que se destina</label>
+                <select class="form-select" required>
+                  <option value="">Selecione o órgão</option>
+                </select>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Para quem</label>
+                  <input type="text" class="form-control" required placeholder="Nome do destinatário">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Assunto</label>
+                  <input type="text" class="form-control" required placeholder="Assunto do contato">
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Conteúdo</label>
+                <textarea class="form-control" rows="4" required placeholder="Descreva sua mensagem"></textarea>
+              </div>
               <div class="row">
                 <div class="col-md-4 mb-3">
                   <label class="form-label">Email do remetente</label>
-                  <input type="email" class="form-control" placeholder="seu@email.com">
+                  <input type="email" class="form-control" required placeholder="seu@email.com">
                 </div>
                 <div class="col-md-4 mb-3">
                   <label class="form-label">Telefone do remetente</label>
-                  <input type="tel" class="form-control" placeholder="(00) 00000-0000">
+                  <input type="tel" class="form-control" required placeholder="(00) 00000-0000">
                 </div>
                 <div class="col-md-4 mb-3">
                   <label class="form-label">Nome do remetente</label>
-                  <input type="text" class="form-control" placeholder="Seu nome completo">
+                  <input type="text" class="form-control" required placeholder="Seu nome completo">
                 </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 mb-3">
-                <label class="form-label">Para quem</label>
-                <input type="text" class="form-control" required placeholder="Nome do destinatário">
+              <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="sendCopy">
+                <label class="form-check-label">Enviar cópia para meu email</label>
               </div>
-              <div class="col-md-6 mb-3">
-                <label class="form-label">Assunto</label>
-                <input type="text" class="form-control" required placeholder="Assunto da denúncia">
+              <div class="d-flex gap-2 justify-content-end">
+                <button type="reset" class="btn btn-secondary">Limpar</button>
+                <button type="submit" class="btn btn-primary">Enviar</button>
               </div>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Conteúdo</label>
-              <textarea class="form-control" rows="4" required placeholder="Descreva sua denúncia com detalhes"></textarea>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Anexos (Fotos ou PDF)</label>
-              <input type="file" class="form-control" multiple accept=".pdf,image/*">
-              <small class="text-muted">Você pode selecionar múltiplos arquivos</small>
-            </div>
-            <div class="mb-3 form-check">
-              <input type="checkbox" class="form-check-input" id="sendCopyComplaint">
-              <label class="form-check-label">Enviar cópia para meu email</label>
-            </div>
-            <div class="d-flex gap-2 justify-content-end">
-              <button type="reset" class="btn btn-secondary">Limpar</button>
-              <button type="submit" class="btn btn-primary">Enviar</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="deamLocatorModal" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Localizador de DEAMs</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          <div class="mb-3">
-            <div id="deamMap" style="height: 500px; width: 100%;"></div>
-          </div>
-          <div id="nearestDeams" class="mt-3">
-            <h6>DEAMs mais próximas:</h6>
-            <ul class="list-group" id="deamList"></ul>
+            </form>
           </div>
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="modal fade" id="boModal" tabindex="-1">
-    <div class="modal-dialog modal-xl">
-      <div class="modal-content">
-        <div class="modal-header bg-primary text-white">
-          <h5 class="modal-title">Registro de Boletim de Ocorrência Online</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          <div class="progress mb-4">
-            <div class="progress-bar" role="progressbar" style="width: 0%" id="formProgress"></div>
+  
+    <div class="modal fade" id="complaintModal" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Formulário de Denúncia</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
-
-          <form id="boForm">
-            <div class="form-step" id="step1">
-              <div class="alert alert-info">
-                <h6><i class="fas fa-info-circle"></i> Informações Importantes</h6>
-                <p>Este formulário destina-se ao registro de ocorrências relacionadas à violência doméstica. Casos de violência sexual devem ser reportados presencialmente em uma delegacia.</p>
+          <div class="modal-body">
+            <form id="complaintForm">
+              <div class="alert alert-info mb-3">
+                <i class="fas fa-info-circle"></i> Você pode fazer uma denúncia anônima marcando a opção abaixo.
               </div>
-
+              <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="anonymous">
+                <label class="form-check-label">Denúncia Anônima</label>
+              </div>
               <div class="mb-3">
-                <label class="form-label">Tipo de Ocorrência</label>
-                <select class="form-select" required name="occurrenceType">
-                  <option value="">Selecione o tipo de ocorrência</option>
-                  <option value="physical">Violência Física</option>
-                  <option value="psychological">Violência Psicológica</option>
-                  <option value="patrimonial">Violência Patrimonial</option>
-                  <option value="moral">Violência Moral</option>
+                <label class="form-label">Órgão a que se destina</label>
+                <select class="form-select" required>
+                  <option value="">Selecione o órgão</option>
                 </select>
               </div>
-            </div>
-
-            <div class="form-step d-none" id="step2">
-              <h6 class="mb-3">Dados da Vítima</h6>
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">Nome Completo</label>
-                  <input type="text" class="form-control" required name="victimName">
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">Nome Social (opcional)</label>
-                  <input type="text" class="form-control" name="victimSocialName">
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">Cidade de Nascimento</label>
-                  <input type="text" class="form-control" required name="birthCity">
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">Estado de Nascimento</label>
-                  <input type="text" class="form-control" required name="birthState">
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">Email</label>
-                  <input type="email" class="form-control" required name="victimEmail">
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">Telefone</label>
-                  <input type="tel" class="form-control" required name="victimPhone">
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">Telefone de Familiar/Amigo</label>
-                  <input type="tel" class="form-control" required name="emergencyPhone">
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">Data de Nascimento</label>
-                  <input type="date" class="form-control" required name="birthDate">
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">RG</label>
-                  <input type="text" class="form-control" required name="rg">
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">CPF</label>
-                  <input type="text" class="form-control" required name="cpf">
-                </div>
-                <div class="col-12 mb-3">
-                  <div class="form-check">
-                    <input type="checkbox" class="form-check-input" name="isForeigner" id="isForeigner">
-                    <label class="form-check-label">Vítima é estrangeira</label>
+              <div id="personalInfo">
+                <div class="row">
+                  <div class="col-md-4 mb-3">
+                    <label class="form-label">Email do remetente</label>
+                    <input type="email" class="form-control" placeholder="seu@email.com">
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label class="form-label">Telefone do remetente</label>
+                    <input type="tel" class="form-control" placeholder="(00) 00000-0000">
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label class="form-label">Nome do remetente</label>
+                    <input type="text" class="form-control" placeholder="Seu nome completo">
                   </div>
                 </div>
-                <div class="col-md-4 mb-3">
-                  <label class="form-label">CEP</label>
-                  <input type="text" class="form-control" required name="zipCode">
-                </div>
-                <div class="col-md-8 mb-3">
-                  <label class="form-label">Endereço</label>
-                  <input type="text" class="form-control" required name="address">
-                </div>
-                <div class="col-md-4 mb-3">
-                  <label class="form-label">Complemento</label>
-                  <input type="text" class="form-control" name="addressComplement">
-                </div>
-                <div class="col-md-4 mb-3">
-                  <label class="form-label">Bairro</label>
-                  <input type="text" class="form-control" required name="neighborhood">
-                </div>
-                <div class="col-md-4 mb-3">
-                  <label class="form-label">Cidade</label>
-                  <input type="text" class="form-control" required name="city">
-                </div>
-              </div>
-            </div>
-
-            <div class="form-step d-none" id="step3">
-              <h6 class="mb-3">Dados do Agressor</h6>
-              <div class="alert alert-info">
-                Preencha os dados que souber. Campos não obrigatórios estão marcados como opcionais.
               </div>
               <div class="row">
                 <div class="col-md-6 mb-3">
-                  <label class="form-label">Nome Completo</label>
-                  <input type="text" class="form-control" name="aggressorName">
+                  <label class="form-label">Para quem</label>
+                  <input type="text" class="form-control" required placeholder="Nome do destinatário">
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label class="form-label">Nome Social (opcional)</label>
-                  <input type="text" class="form-control" name="aggressorSocialName">
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">Sexo</label>
-                  <select class="form-select" name="aggressorSex">
-                    <option value="">Selecione</option>
-                    <option value="M">Masculino</option>
-                    <option value="F">Feminino</option>
-                    <option value="O">Outro</option>
-                  </select>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">Profissão (opcional)</label>
-                  <input type="text" class="form-control" name="aggressorProfession">
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">Telefone (opcional)</label>
-                  <input type="tel" class="form-control" name="aggressorPhone">
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">Email (opcional)</label>
-                  <input type="email" class="form-control" name="aggressorEmail">
-                </div>
-                <div class="col-md-12 mb-3">
-                  <label class="form-label">Relacionamento com a Vítima</label>
-                  <select class="form-select" required name="relationship">
-                    <option value="">Selecione</option>
-                    <option value="conjuge">Cônjuge/Companheiro(a)</option>
-                    <option value="ex-conjuge">Ex-Cônjuge/Ex-Companheiro(a)</option>
-                    <option value="namorado">Namorado(a)</option>
-                    <option value="ex-namorado">Ex-Namorado(a)</option>
-                    <option value="familiar">Familiar</option>
-                    <option value="outro">Outro</option>
-                  </select>
-                </div>
-                <div class="col-12 mb-3">
-                  <div class="form-check">
-                    <input type="checkbox" class="form-check-input" name="liveTogether" id="liveTogether">
-                    <label class="form-check-label">Agressor mora com a vítima</label>
-                  </div>
-                </div>
-                <div class="col-12 mb-3">
-                  <label class="form-label">Possui filhos com o agressor?</label>
-                  <div class="input-group">
-                    <div class="form-check form-check-inline">
-                      <input type="radio" class="form-check-input" name="hasChildren" value="yes" id="hasChildrenYes">
-                      <label class="form-check-label">Sim</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input type="radio" class="form-check-input" name="hasChildren" value="no" id="hasChildrenNo">
-                      <label class="form-check-label">Não</label>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4 mb-3" id="childrenCount" style="display: none;">
-                  <label class="form-label">Quantos filhos?</label>
-                  <input type="number" class="form-control" name="childrenCount" min="1">
+                  <label class="form-label">Assunto</label>
+                  <input type="text" class="form-control" required placeholder="Assunto da denúncia">
                 </div>
               </div>
-            </div>
-
-            <div class="form-step d-none" id="step4">
-              <h6 class="mb-3">Detalhes da Ocorrência</h6>
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">Data do Fato</label>
-                  <input type="date" class="form-control" required name="incidentDate">
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">Hora do Fato</label>
-                  <input type="time" class="form-control" required name="incidentTime">
-                </div>
-                <div class="col-12 mb-3">
-                  <label class="form-label">Local do Fato</label>
-                  <input type="text" class="form-control" required name="incidentLocation" placeholder="Digite o endereço completo">
-                </div>
-                <div class="col-12 mb-3">
-                  <label class="form-label">Descrição Detalhada do Ocorrido</label>
-                  <textarea class="form-control" rows="5" required name="incidentDescription" placeholder="Descreva com suas palavras o que aconteceu..."></textarea>
-                </div>
-                <div class="col-12 mb-3">
-                  <label class="form-label">Medidas Protetivas</label>
-                  <div class="alert alert-info">
-                    Selecione as medidas protetivas que deseja solicitar:
-                  </div>
-                  <div class="form-check mb-2">
-                    <input type="checkbox" class="form-check-input" name="protectiveMeasures[]" value="afastamento">
-                    <label class="form-check-label">Afastamento do agressor do lar</label>
-                  </div>
-                  <div class="form-check mb-2">
-                    <input type="checkbox" class="form-check-input" name="protectiveMeasures[]" value="aproximacao">
-                    <label class="form-check-label">Proibição de aproximação</label>
-                  </div>
-                  <div class="form-check mb-2">
-                    <input type="checkbox" class="form-check-input" name="protectiveMeasures[]" value="contato">
-                    <label class="form-check-label">Proibição de contato</label>
-                  </div>
-                  <div class="form-check mb-2">
-                    <input type="checkbox" class="form-check-input" name="protectiveMeasures[]" value="frequentacao">
-                    <label class="form-check-label">Proibição de frequentação de determinados lugares</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="form-step d-none" id="step5">
-              <h6 class="mb-3">Evidências</h6>
               <div class="mb-3">
-                <label class="form-label">Anexar Fotos ou Documentos</label>
-                <input type="file" class="form-control" multiple accept="image/*,.pdf" id="evidenceUpload">
-                <small class="text-muted">Arquivos aceitos: JPG, PNG, PDF (máx. 2MB cada)</small>
+                <label class="form-label">Conteúdo</label>
+                <textarea class="form-control" rows="4" required placeholder="Descreva sua denúncia com detalhes"></textarea>
               </div>
-            </div>
-
-            <div class="d-flex justify-content-between mt-4">
-              <button type="button" class="btn btn-secondary" id="prevStep">Voltar</button>
-              <button type="button" class="btn btn-primary" id="nextStep">Próximo</button>
-              <button type="submit" class="btn btn-success d-none" id="submitBO">Finalizar Registro</button>
-            </div>
-          </form>
+              <div class="mb-3">
+                <label class="form-label">Anexos (Fotos ou PDF)</label>
+                <input type="file" class="form-control" multiple accept=".pdf,image/*">
+                <small class="text-muted">Você pode selecionar múltiplos arquivos</small>
+              </div>
+              <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="sendCopyComplaint">
+                <label class="form-check-label">Enviar cópia para meu email</label>
+              </div>
+              <div class="d-flex gap-2 justify-content-end">
+                <button type="reset" class="btn btn-secondary">Limpar</button>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script>
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-          behavior: 'smooth'
+  
+    <div class="modal fade" id="deamLocatorModal" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Localizador de DEAMs</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <div id="deamMap" style="height: 500px; width: 100%;"></div>
+            </div>
+            <div id="nearestDeams" class="mt-3">
+              <h6>DEAMs mais próximas:</h6>
+              <ul class="list-group" id="deamList"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="modal fade" id="boModal" tabindex="-1">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title">Registro de Boletim de Ocorrência Online</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div class="progress mb-4">
+              <div class="progress-bar" role="progressbar" style="width: 0%" id="formProgress"></div>
+            </div>
+            <form id="boForm">
+              <div class="form-step" id="step1">
+                <div class="alert alert-info">
+                  <h6><i class="fas fa-info-circle"></i> Informações Importantes</h6>
+                  <p>Este formulário destina-se ao registro de ocorrências relacionadas à violência doméstica. Casos de violência sexual devem ser reportados presencialmente em uma delegacia.</p>
+                </div>
+  
+                <div class="mb-3">
+                  <label class="form-label">Tipo de Ocorrência</label>
+                  <select class="form-select" required name="occurrenceType">
+                    <option value="">Selecione o tipo de ocorrência</option>
+                    <option value="physical">Violência Física</option>
+                    <option value="psychological">Violência Psicológica</option>
+                    <option value="patrimonial">Violência Patrimonial</option>
+                    <option value="moral">Violência Moral</option>
+                  </select>
+                </div>
+              </div>
+  
+              <div class="form-step d-none" id="step2">
+                <h6 class="mb-3">Dados da Vítima</h6>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Nome Completo</label>
+                    <input type="text" class="form-control" required name="victimName">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Nome Social (opcional)</label>
+                    <input type="text" class="form-control" name="victimSocialName">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Cidade de Nascimento</label>
+                    <input type="text" class="form-control" required name="birthCity">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Estado de Nascimento</label>
+                    <input type="text" class="form-control" required name="birthState">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" required name="victimEmail">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Telefone</label>
+                    <input type="tel" class="form-control" required name="victimPhone">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Telefone de Familiar/Amigo</label>
+                    <input type="tel" class="form-control" required name="emergencyPhone">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Data de Nascimento</label>
+                    <input type="date" class="form-control" required name="birthDate">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">RG</label>
+                    <input type="text" class="form-control" required name="rg">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">CPF</label>
+                    <input type="text" class="form-control" required name="cpf">
+                  </div>
+                  <div class="col-12 mb-3">
+                    <div class="form-check">
+                      <input type="checkbox" class="form-check-input" name="isForeigner" id="isForeigner">
+                      <label class="form-check-label">Vítima é estrangeira</label>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label class="form-label">CEP</label>
+                    <input type="text" class="form-control" required name="zipCode">
+                  </div>
+                  <div class="col-md-8 mb-3">
+                    <label class="form-label">Endereço</label>
+                    <input type="text" class="form-control" required name="address">
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label class="form-label">Complemento</label>
+                    <input type="text" class="form-control" name="addressComplement">
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label class="form-label">Bairro</label>
+                    <input type="text" class="form-control" required name="neighborhood">
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label class="form-label">Cidade</label>
+                    <input type="text" class="form-control" required name="city">
+                  </div>
+                </div>
+              </div>
+  
+              <div class="form-step d-none" id="step3">
+                <h6 class="mb-3">Dados do Agressor</h6>
+                <div class="alert alert-info">
+                  Preencha os dados que souber. Campos não obrigatórios estão marcados como opcionais.
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Nome Completo</label>
+                    <input type="text" class="form-control" name="aggressorName">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Nome Social (opcional)</label>
+                    <input type="text" class="form-control" name="aggressorSocialName">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Sexo</label>
+                    <select class="form-select" name="aggressorSex">
+                      <option value="">Selecione</option>
+                      <option value="M">Masculino</option>
+                      <option value="F">Feminino</option>
+                      <option value="O">Outro</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Profissão (opcional)</label>
+                    <input type="text" class="form-control" name="aggressorProfession">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Telefone (opcional)</label>
+                    <input type="tel" class="form-control" name="aggressorPhone">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Email (opcional)</label>
+                    <input type="email" class="form-control" name="aggressorEmail">
+                  </div>
+                  <div class="col-md-12 mb-3">
+                    <label class="form-label">Relacionamento com a Vítima</label>
+                    <select class="form-select" required name="relationship">
+                      <option value="">Selecione</option>
+                      <option value="conjuge">Cônjuge/Companheiro(a)</option>
+                      <option value="ex-conjuge">Ex-Cônjuge/Ex-Companheiro(a)</option>
+                      <option value="namorado">Namorado(a)</option>
+                      <option value="ex-namorado">Ex-Namorado(a)</option>
+                      <option value="familiar">Familiar</option>
+                      <option value="outro">Outro</option>
+                    </select>
+                  </div>
+                  <div class="col-12 mb-3">
+                    <div class="form-check">
+                      <input type="checkbox" class="form-check-input" name="liveTogether" id="liveTogether">
+                      <label class="form-check-label">Agressor mora com a vítima</label>
+                    </div>
+                  </div>
+                  <div class="col-12 mb-3">
+                    <label class="form-label">Possui filhos com o agressor?</label>
+                    <div class="input-group">
+                      <div class="form-check form-check-inline">
+                        <input type="radio" class="form-check-input" name="hasChildren" value="yes" id="hasChildrenYes">
+                        <label class="form-check-label">Sim</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input type="radio" class="form-check-input" name="hasChildren" value="no" id="hasChildrenNo">
+                        <label class="form-check-label">Não</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-3" id="childrenCount" style="display: none;">
+                    <label class="form-label">Quantos filhos?</label>
+                    <input type="number" class="form-control" name="childrenCount" min="1">
+                  </div>
+                </div>
+              </div>
+  
+              <div class="form-step d-none" id="step4">
+                <h6 class="mb-3">Detalhes da Ocorrência</h6>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Data do Fato</label>
+                    <input type="date" class="form-control" required name="incidentDate">
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Hora do Fato</label>
+                    <input type="time" class="form-control" required name="incidentTime">
+                  </div>
+                  <div class="col-12 mb-3">
+                    <label class="form-label">Local do Fato</label>
+                    <input type="text" class="form-control" required name="incidentLocation" placeholder="Digite o endereço completo">
+                  </div>
+                  <div class="col-12 mb-3">
+                    <label class="form-label">Descrição Detalhada do Ocorrido</label>
+                    <textarea class="form-control" rows="5" required name="incidentDescription" placeholder="Descreva com suas palavras o que aconteceu..."></textarea>
+                  </div>
+                  <div class="col-12 mb-3">
+                    <label class="form-label">Medidas Protetivas</label>
+                    <div class="alert alert-info">
+                      Selecione as medidas protetivas que deseja solicitar:
+                    </div>
+                    <div class="form-check mb-2">
+                      <input type="checkbox" class="form-check-input" name="protectiveMeasures[]" value="afastamento">
+                      <label class="form-check-label">Afastamento do agressor do lar</label>
+                    </div>
+                    <div class="form-check mb-2">
+                      <input type="checkbox" class="form-check-input" name="protectiveMeasures[]" value="aproximacao">
+                      <label class="form-check-label">Proibição de aproximação</label>
+                    </div>
+                    <div class="form-check mb-2">
+                      <input type="checkbox" class="form-check-input" name="protectiveMeasures[]" value="contato">
+                      <label class="form-check-label">Proibição de contato</label>
+                    </div>
+                    <div class="form-check mb-2">
+                      <input type="checkbox" class="form-check-input" name="protectiveMeasures[]" value="frequentacao">
+                      <label class="form-check-label">Proibição de frequentação de determinados lugares</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+              <div class="form-step d-none" id="step5">
+                <h6 class="mb-3">Evidências</h6>
+                <div class="mb-3">
+                  <label class="form-label">Anexar Fotos ou Documentos</label>
+                  <input type="file" class="form-control" multiple accept="image/*,.pdf" id="evidenceUpload">
+                  <small class="text-muted">Arquivos aceitos: JPG, PNG, PDF (máx. 2MB cada)</small>
+                </div>
+              </div>
+  
+              <div class="d-flex justify-content-between mt-4">
+                <button type="button" class="btn btn-secondary" id="prevStep">Voltar</button>
+                <button type="button" class="btn btn-primary" id="nextStep">Próximo</button>
+                <button type="submit" class="btn btn-success d-none" id="submitBO">Finalizar Registro</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+  
+          document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+          });
         });
       });
-    });
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('fade-in');
-        }
+  
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('fade-in');
+          }
+        });
       });
-    });
-
-    document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
-
-    function createChart() {
-      const ctx = document.getElementById('violenceChart');
-      if (!ctx) {
-        console.warn('Violence chart canvas element not found');
-        return;
-      }
-
-      try {
-        if (violenceChart) {
-          violenceChart.destroy();
+  
+      document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+  
+      function createChart() {
+        const ctx = document.getElementById('violenceChart');
+        if (!ctx) {
+          console.warn('Violence chart canvas element not found');
+          return;
         }
-
-        violenceChart = new Chart(ctx.getContext('2d'), {
-          type: 'bar',
-          data: {
-            labels: ['Boa Viagem', 'Pina', 'Ibura', 'Várzea', 'Ipsep', 'Afogados', 'Casa Amarela', 'Imbiribeira', 'Jordão', 'Água Fria'],
-            datasets: [
-              {
-                label: 'Incidências de Violência Contra a Mulher',
-                data: [120, 98, 85, 76, 72, 68, 65, 60, 58, 55],
-                backgroundColor: 'rgba(76, 175, 80, 0.8)',
-                borderColor: 'rgba(76, 175, 80, 1)',
-                borderWidth: 1
-              },
-              {
-                label: 'Atendimentos Realizados pela Unidade da Mulher',
-                data: [110, 90, 80, 70, 65, 62, 58, 55, 50, 48],
-                backgroundColor: 'rgba(106, 13, 173, 0.8)',
-                borderColor: 'rgba(106, 13, 173, 1)',
-                borderWidth: 1
-              }
-            ]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-              y: {
-                beginAtZero: true,
-                title: {
-                  display: true,
-                  text: 'Número de Incidências/Atendimentos'
+  
+        try {
+          if (violenceChart) {
+            violenceChart.destroy();
+          }
+  
+          violenceChart = new Chart(ctx.getContext('2d'), {
+            type: 'bar',
+            data: {
+              labels: ['Boa Viagem', 'Pina', 'Ibura', 'Várzea', 'Ipsep', 'Afogados', 'Casa Amarela', 'Imbiribeira', 'Jordão', 'Água Fria'],
+              datasets: [
+                {
+                  label: 'Incidências de Violência Contra a Mulher',
+                  data: [120, 98, 85, 76, 72, 68, 65, 60, 58, 55],
+                  backgroundColor: 'rgba(76, 175, 80, 0.8)',
+                  borderColor: 'rgba(76, 175, 80, 1)',
+                  borderWidth: 1
+                },
+                {
+                  label: 'Atendimentos Realizados pela Unidade da Mulher',
+                  data: [110, 90, 80, 70, 65, 62, 58, 55, 50, 48],
+                  backgroundColor: 'rgba(106, 13, 173, 0.8)',
+                  borderColor: 'rgba(106, 13, 173, 1)',
+                  borderWidth: 1
                 }
-              },
-              x: {
-                title: {
-                  display: true,
-                  text: 'Bairros'
-                }
-              }
+              ]
             },
-            plugins: {
-              legend: {
-                display: true,
-                position: 'top'
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  title: {
+                    display: true,
+                    text: 'Número de Incidências/Atendimentos'
+                  }
+                },
+                x: {
+                  title: {
+                    display: true,
+                    text: 'Bairros'
+                  }
+                }
               },
-              title: {
-                display: true,
-                text: 'Incidentes de Violência e Atendimentos por Bairro nos Últimos 3 Meses',
-                font: {
-                  size: 16
+              plugins: {
+                legend: {
+                  display: true,
+                  position: 'top'
+                },
+                title: {
+                  display: true,
+                  text: 'Incidentes de Violência e Atendimentos por Bairro nos Últimos 3 Meses',
+                  font: {
+                    size: 16
+                  }
                 }
               }
             }
-          }
-        });
-      } catch (error) {
-        console.error('Error creating chart:', error);
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      createChart();
-    });
-
-    document.addEventListener('DOMContentLoaded', function() {
-      const newsContainer = document.getElementById('newsContainer');
-      if (!newsContainer) {
-        console.warn('News container element not found');
-        return;
-      }
-      
-      const newsItems = [
-        {
-          title: 'Nova Casa de Acolhimento Inaugurada',
-          description: 'Uma nova unidade de acolhimento para mulheres vítimas de violência foi inaugurada no Recife.',
-          date: '15 de março de 2024',
-          image: 'https://pablodiego.com.br/brunno/barbara/1.jpeg',
-          imageAlt: 'Fachada da nova casa de acolhimento, estilo moderno com arquitetura acolhedora'
-        },
-        {
-          title: 'Programa de Capacitação Profissional',
-          description: 'Inscrições abertas para cursos gratuitos de qualificação profissional destinados a mulheres em situação de vulnerabilidade.',
-          date: '12 de março de 2024',
-          image: 'https://pablodiego.com.br/brunno/barbara/2.jpg',
-          imageAlt: 'Grupo de mulheres em sala de treinamento profissional, ambiente educacional'
-        },
-        {
-          title: 'Campanha de Conscientização nas Escolas',
-          description: 'Iniciativa leva informações sobre prevenção da violência contra a mulher a estudantes do ensino médio.',
-          date: '10 de março de 2024',
-          image: 'https://pablodiego.com.br/brunno/barbara/3.jpeg',
-          imageAlt: 'Palestra sobre direitos das mulheres em auditório escolar lotado'
+          });
+        } catch (error) {
+          console.error('Error creating chart:', error);
         }
-      ];
-
-      newsItems.forEach(item => {
-        const newsItemHTML = `
-          <div class="news-item">
-            <img src="${item.image}" alt="${item.imageAlt}" class="news-image">
-            <div class="news-content">
-              <h3>${item.title}</h3>
-              <p>${item.description}</p>
-              <span class="date"><i class="far fa-calendar-alt"></i> ${item.date}</span>
-              <div class="mt-3">
-                <a href="#" class="btn btn-sm btn-primary" onclick="readMore('${item.title}')">Leia mais</a>
-              </div>
-            </div>
-          </div>
-        `;
-        newsContainer.innerHTML += newsItemHTML;
-      });
-    });
-
-    function readMore(title) {
-      Swal.fire({
-        title: title,
-        text: 'Conteúdo completo da notícia será exibido aqui.',
-        confirmButtonText: 'Fechar',
-        confirmButtonColor: '#6a0dad'
-      });
-    }
-
-    function openDEAMLocator() {
-      const modalElement = document.getElementById('deamLocatorModal');
-      if (!modalElement) {
-        console.warn('DEAM locator modal element not found');
-        return;
       }
-
-      const modal = new bootstrap.Modal(modalElement);
-      modal.show();
-      
-      const mapElement = document.getElementById('deamMap');
-      if (!mapElement) {
-        console.warn('Map element not found');
-        return;
-      }
-
-      try {
-        const deamLocations = [
-          { 
-            name: 'DEAM Recife Centro', 
-            lat: -8.0578, 
-            lng: -34.8829,
-            address: 'R. do Pombal, 455 - Santo Amaro, Recife - PE'
+  
+      document.addEventListener('DOMContentLoaded', () => {
+        createChart();
+      });
+  
+      document.addEventListener('DOMContentLoaded', function() {
+        const newsContainer = document.getElementById('newsContainer');
+        if (!newsContainer) {
+          console.warn('News container element not found');
+          return;
+        }
+        
+        const newsItems = [
+          {
+            title: 'Nova Casa de Acolhimento Inaugurada',
+            description: 'Uma nova unidade de acolhimento para mulheres vítimas de violência foi inaugurada no Recife.',
+            date: '15 de março de 2024',
+            image: 'https://pablodiego.com.br/brunno/barbara/1.jpeg',
+            imageAlt: 'Fachada da nova casa de acolhimento, estilo moderno com arquitetura acolhedora'
           },
-          { 
-            name: 'DEAM Prazeres', 
-            lat: -8.0982, 
-            lng: -34.9559,
-            address: 'R. Virgínia Loreto, 90 - Prazeres, Jaboatão dos Guararapes - PE'
+          {
+            title: 'Programa de Capacitação Profissional',
+            description: 'Inscrições abertas para cursos gratuitos de qualificação profissional destinados a mulheres em situação de vulnerabilidade.',
+            date: '12 de março de 2024',
+            image: 'https://pablodiego.com.br/brunno/barbara/2.jpg',
+            imageAlt: 'Grupo de mulheres em sala de treinamento profissional, ambiente educacional'
           },
-          { 
-            name: 'DEAM Paulista', 
-            lat: -7.9411, 
-            lng: -34.8730,
-            address: 'R. do Cajueiro, s/n - Praça Frederico Lundgren - Centro, Paulista - PE'
+          {
+            title: 'Campanha de Conscientização nas Escolas',
+            description: 'Iniciativa leva informações sobre prevenção da violência contra a mulher a estudantes do ensino médio.',
+            date: '10 de março de 2024',
+            image: 'https://pablodiego.com.br/brunno/barbara/3.jpeg',
+            imageAlt: 'Palestra sobre direitos das mulheres em auditório escolar lotado'
           }
         ];
-
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition((position) => {
-            const userLocation = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
-
-            const map = new google.maps.Map(mapElement, {
-              center: userLocation,
-              zoom: 12
-            });
-
-            new google.maps.Marker({
-              position: userLocation,
-              map: map,
-              icon: {
-                path: google.maps.SymbolPath.CIRCLE,
-                scale: 10,
-                fillColor: '#4285F4',
-                fillOpacity: 1,
-                strokeWeight: 2,
-                strokeColor: '#ffffff',
-              },
-              title: 'Sua localização'
-            });
-
-            const deamList = document.getElementById('deamList');
-            deamList.innerHTML = '';
-            
-            deamLocations.forEach(deam => {
-              const marker = new google.maps.Marker({
-                position: { lat: deam.lat, lng: deam.lng },
-                map: map,
-                title: deam.name,
-                icon: {
-                  url: 'https://maps.google.com/mapfiles/ms/icons/purple-dot.png'
-                }
-              });
-
-              const infoWindow = new google.maps.InfoWindow({
-                content: `
-                  <div style="padding: 10px;">
-                    <h6 style="margin: 0 0 5px 0;">${deam.name}</h6>
-                    <p style="margin: 0;">${deam.address}</p>
-                  </div>
-                `
-              });
-
-              marker.addListener('click', () => {
-                infoWindow.open(map, marker);
-              });
-
-              const distance = google.maps.geometry.spherical.computeDistanceBetween(
-                new google.maps.LatLng(userLocation),
-                new google.maps.LatLng(deam.lat, deam.lng)
-              );
-
-              const li = document.createElement('li');
-              li.className = 'list-group-item d-flex justify-content-between align-items-center';
-              li.innerHTML = `
-                <div>
-                  <strong>${deam.name}</strong><br>
-                  <small class="text-muted">${deam.address}</small><br>
-                  <span class="badge bg-primary rounded-pill">Distância: ${(distance/1000).toFixed(1)}km</span>
+  
+        newsItems.forEach(item => {
+          const newsItemHTML = `
+            <div class="news-item">
+              <img src="${item.image}" alt="${item.imageAlt}" class="news-image">
+              <div class="news-content">
+                <h3>${item.title}</h3>
+                <p>${item.description}</p>
+                <span class="date"><i class="far fa-calendar-alt"></i> ${item.date}</span>
+                <div class="mt-3">
+                  <a href="#" class="btn btn-sm btn-primary" onclick="readMore('${item.title}')">Leia mais</a>
                 </div>
-                <button class="btn btn-sm btn-outline-primary" onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=${deam.lat},${deam.lng}')">
-                  <i class="fas fa-directions"></i> Como chegar
-                </button>
-              `;
-              deamList.appendChild(li);
+              </div>
+            </div>
+          `;
+          newsContainer.innerHTML += newsItemHTML;
+        });
+      });
+  
+      function readMore(title) {
+        Swal.fire({
+          title: title,
+          text: 'Conteúdo completo da notícia será exibido aqui.',
+          confirmButtonText: 'Fechar',
+          confirmButtonColor: '#6a0dad'
+        });
+      }
+  
+      function openDEAMLocator() {
+        const modalElement = document.getElementById('deamLocatorModal');
+        if (!modalElement) {
+          console.warn('DEAM locator modal element not found');
+          return;
+        }
+  
+        const modal = new bootstrap.Modal(modalElement);
+        modal.show();
+        
+        const mapElement = document.getElementById('deamMap');
+        if (!mapElement) {
+          console.warn('Map element not found');
+          return;
+        }
+  
+        try {
+          const deamLocations = [
+            { 
+              name: 'DEAM Recife Centro', 
+              lat: -8.0578, 
+              lng: -34.8829,
+              address: 'R. do Pombal, 455 - Santo Amaro, Recife - PE'
+            },
+            { 
+              name: 'DEAM Prazeres', 
+              lat: -8.0982, 
+              lng: -34.9559,
+              address: 'R. Virgínia Loreto, 90 - Prazeres, Jaboatão dos Guararapes - PE'
+            },
+            { 
+              name: 'DEAM Paulista', 
+              lat: -7.9411, 
+              lng: -34.8730,
+              address: 'R. do Cajueiro, s/n - Praça Frederico Lundgren - Centro, Paulista - PE'
+            }
+          ];
+  
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+              const userLocation = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+              };
+  
+              const map = new google.maps.Map(mapElement, {
+                center: userLocation,
+                zoom: 12
+              });
+  
+              new google.maps.Marker({
+                position: userLocation,
+                map: map,
+                icon: {
+                  path: google.maps.SymbolPath.CIRCLE,
+                  scale: 10,
+                  fillColor: '#4285F4',
+                  fillOpacity: 1,
+                  strokeWeight: 2,
+                  strokeColor: '#ffffff',
+                },
+                title: 'Sua localização'
+              });
+  
+              const deamList = document.getElementById('deamList');
+              deamList.innerHTML = '';
+              
+              deamLocations.forEach(deam => {
+                const marker = new google.maps.Marker({
+                  position: { lat: deam.lat, lng: deam.lng },
+                  map: map,
+                  title: deam.name,
+                  icon: {
+                    url: 'https://maps.google.com/mapfiles/ms/icons/purple-dot.png'
+                  }
+                });
+  
+                const infoWindow = new google.maps.InfoWindow({
+                  content: `
+                    <div style="padding: 10px;">
+                      <h6 style="margin: 0 0 5px 0;">${deam.name}</h6>
+                      <p style="margin: 0;">${deam.address}</p>
+                    </div>
+                  `
+                });
+  
+                marker.addListener('click', () => {
+                  infoWindow.open(map, marker);
+                });
+  
+                const distance = google.maps.geometry.spherical.computeDistanceBetween(
+                  new google.maps.LatLng(userLocation),
+                  new google.maps.LatLng(deam.lat, deam.lng)
+                );
+  
+                const li = document.createElement('li');
+                li.className = 'list-group-item d-flex justify-content-between align-items-center';
+                li.innerHTML = `
+                  <div>
+                    <strong>${deam.name}</strong><br>
+                    <small class="text-muted">${deam.address}</small><br>
+                    <span class="badge bg-primary rounded-pill">Distância: ${(distance/1000).toFixed(1)}km</span>
+                  </div>
+                  <button class="btn btn-sm btn-outline-primary" onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=${deam.lat},${deam.lng}')">
+                    <i class="fas fa-directions"></i> Como chegar
+                  </button>
+                `;
+                deamList.appendChild(li);
+              });
+            }, (error) => {
+              console.error('Error getting location:', error);
+              Swal.fire({
+                title: 'Erro',
+                text: 'Não foi possível obter sua localização. Por favor, permita o acesso à localização e tente novamente.',
+                icon: 'error',
+                confirmButtonText: 'Ok'
+              });
             });
-          }, (error) => {
-            console.error('Error getting location:', error);
+          } else {
+            console.warn('Geolocation not supported');
             Swal.fire({
               title: 'Erro',
-              text: 'Não foi possível obter sua localização. Por favor, permita o acesso à localização e tente novamente.',
+              text: 'Seu navegador não suporta geolocalização.',
               icon: 'error',
               confirmButtonText: 'Ok'
             });
-          });
-        } else {
-          console.warn('Geolocation not supported');
-          Swal.fire({
-            title: 'Erro',
-            text: 'Seu navegador não suporta geolocalização.',
-            icon: 'error',
-            confirmButtonText: 'Ok'
-          });
+          }
+        } catch (error) {
+          console.error('Error initializing map:', error);
         }
-      } catch (error) {
-        console.error('Error initializing map:', error);
       }
-    }
-
-    // Add event listener for form submission
-    document.getElementById('contactForm')?.addEventListener('submit', function(e) {
-      e.preventDefault();
-      Swal.fire({
-        title: 'Sucesso!',
-        text: 'Sua mensagem foi enviada com sucesso.',
-        icon: 'success',
-        confirmButtonText: 'Ok'
+  
+      // Add event listener for form submission
+      document.getElementById('contactForm')?.addEventListener('submit', function(e) {
+        e.preventDefault();
+        Swal.fire({
+          title: 'Sucesso!',
+          text: 'Sua mensagem foi enviada com sucesso.',
+          icon: 'success',
+          confirmButtonText: 'Ok'
+        });
+        this.reset();
       });
-      this.reset();
-    });
-
-    document.getElementById('complaintForm')?.addEventListener('submit', function(e) {
-      e.preventDefault();
-      Swal.fire({
-        title: 'Sucesso!',
-        text: 'Sua denúncia foi registrada com sucesso.',
-        icon: 'success',
-        confirmButtonText: 'Ok'
+  
+      document.getElementById('complaintForm')?.addEventListener('submit', function(e) {
+        e.preventDefault();
+        Swal.fire({
+          title: 'Sucesso!',
+          text: 'Sua denúncia foi registrada com sucesso.',
+          icon: 'success',
+          confirmButtonText: 'Ok'
+        });
+        this.reset();
       });
-      this.reset();
-    });
-
-    // Initialize Bootstrap tooltips
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-      return new bootstrap.Tooltip(tooltipTriggerEl);
-    });
-
-    // Handle modal state preservation
-    var modals = document.querySelectorAll('.modal');
-    modals.forEach(function(modal) {
-      modal.addEventListener('hidden.bs.modal', function () {
-        if (document.body.classList.contains('modal-open')) {
-          document.body.classList.remove('modal-open');
-          document.body.style.paddingRight = '';
-        }
+  
+      // Initialize Bootstrap tooltips
+      var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
       });
-    });
-              
-  </script>
-</body>
-</html>
+  
+      // Handle modal state preservation
+      var modals = document.querySelectorAll('.modal');
+      modals.forEach(function(modal) {
+        modal.addEventListener('hidden.bs.modal', function () {
+          if (document.body.classList.contains('modal-open')) {
+            document.body.classList.remove('modal-open');
+            document.body.style.paddingRight = '';
+          }
+        });
+      });
+                
+    </script>
+  </body>
+  </html>

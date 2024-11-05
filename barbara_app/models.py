@@ -80,18 +80,6 @@ def validate_file_extension(value):
     if not value.name.endswith(('.jpg', '.jpeg', '.png', '.pdf')):
         raise ValidationError("Somente arquivos JPG, PNG ou PDF são permitidos.")
 
-
-class Boletim_Ocorrencia(models.Model):
-    tipo_ocorrencia = models.CharField(max_length=100, blank=True, null=True) 
-    vitima = models.ForeignKey(Vitima, on_delete=models.CASCADE, related_name='boletim_ocorrencia')
-    agressor = models.ForeignKey(Agressor, on_delete=models.SET_NULL, null=True, blank=True, related_name='boletim_ocorrencia')
-    ocorrencia = models.ForeignKey(Ocorrencia, on_delete=models.CASCADE, related_name='boletim_ocorrencia')
-    evidencias = models.FileField(upload_to='evidencias/', null=True, blank=True, validators=[validate_file_extension])
-
-    def __str__(self):
-        return f'Boletim: {self.tipo_ocorrencia} - Vítima: {self.vitima.nome}'
-
-
 class BotaoPanico(models.Model):
     data_ocorrido = models.DateField(default=timezone.now)
     hora = models.TimeField(default=timezone.now)
@@ -129,3 +117,47 @@ class Formulario_Contato(models.Model):
 
     def __str__(self):
         return f'Contato: {self.assunto} - {self.orgao}'
+
+class Boletim_Ocorrencia(models.Model):
+    tipo_ocorrencia = models.CharField(max_length=40, default='Violencia Fisica')
+    # Informações da Vítima
+    nome_completo_vitima = models.CharField(max_length=105, default='Desconhecido')  
+    nome_social_vitima = models.CharField(max_length=105, blank=True, null=True)  
+    cidade_nascimento_vitima = models.CharField(max_length=55, default='Desconhecida')  
+    estado_nascimento_vitima = models.CharField(max_length=55, default='Desconhecido')  
+    email_vitima = models.EmailField(default='nao-informado@exemplo.com')
+    telefone_vitima = models.CharField(max_length=20, default='00000000000')  
+    telefone_familiar_amigo_vitima = models.CharField(max_length=20, blank=True, null=True)  
+    data_nascimento_vitima = models.DateField(default='2000-01-01')
+    rg_vitima = models.CharField(max_length=25, blank=True, null=True)  
+    cpf_vitima = models.CharField(max_length=19, blank=True, null=True)  
+    is_estrangeira_vitima = models.BooleanField(default=False)
+    cep_vitima = models.CharField(max_length=15, default='00000-000')  
+    endereco_vitima = models.CharField(max_length=255, default='Endereço não informado')  
+    complemento_vitima = models.CharField(max_length=105, blank=True, null=True)  
+    bairro_vitima = models.CharField(max_length=105, default='Bairro não informado')  
+    cidade_vitima = models.CharField(max_length=105, default='Cidade não informada')  
+
+    # Dados do Agressor
+    nome_completo_agressor = models.CharField(max_length=105, default='Desconhecido')  
+    nome_social_agressor = models.CharField(max_length=105, blank=True, null=True)  
+    sexo_agressor = models.CharField(max_length=15, default='Desconhecido')  
+    profissao_agressor = models.CharField(max_length=55, blank=True, null=True)  
+    telefone_agressor = models.CharField(max_length=20, blank=True, null=True)  
+    email_agressor = models.EmailField(blank=True, null=True)
+    relacionamento_vitima_agressor = models.CharField(max_length=55, default='Desconhecido')  
+    mora_com_vitima = models.BooleanField(default=False)
+    possui_filhos_agressor = models.BooleanField(default=False)
+
+    # Detalhes da Ocorrência
+    data_fato = models.DateField(default='2000-01-01')
+    hora_fato = models.TimeField(default='00:00:00')
+    local_fato = models.CharField(max_length=255, default='Local não informado')  
+    descricao_detalhada_ocorrido = models.TextField(default='Descrição não informada')
+    medidas_protetivas = models.TextField(blank=True, null=True)
+
+    #Evidencias
+    evidencias = models.FileField(upload_to='evidencias/', null=True, blank=True, validators=[validate_file_extension])
+
+    def __str__(self):
+        return f'Boletim de Ocorrência - {self.tipo_ocorrencia} - {self.nome_completo_vitima}'

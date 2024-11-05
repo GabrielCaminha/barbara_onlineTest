@@ -1,31 +1,96 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.views.generic import TemplateView, ListView
 from .models import Vitima, Agressor, Ocorrencia, BotaoPanico, Boletim_Ocorrencia, Denuncia, Formulario_Contato, ListaContatos
-from .forms import VitimaForm, AgressorForm, OcorrenciaForm, Boletim_OcorrenciaForm, DenunciaForm, Formulario_ContatoForm, ListaContatosForm
+from .forms import VitimaForm, AgressorForm, OcorrenciaForm, Boletim_OcorrenciaForm, DenunciaForm, Formulario_ContatoForm, ListaContatosForm, BotaoPanicoForm
 from django.views.decorators.csrf import csrf_exempt
-from django.forms import inlineformset_factory
-def home(request):
-    return render(request, 'ocorrencias/home.html')
+from django.http import JsonResponse
+
+# Home View
+class HomeView(TemplateView):
+    template_name = 'ocorrencias/home.html'
 
 # Vítima Views
-def lista_vitimas(request):
-    vitimas = Vitima.objects.all()
-    return render(request, 'ocorrencias/lista_vitimas.html', {'vitimas': vitimas})
+class ListaVitimasView(ListView):
+    model = Vitima
+    template_name = 'ocorrencias/lista_vitimas.html'
+    context_object_name = 'vitimas'
 
+# Agressor Views
+class ListaAgressoresView(ListView):
+    model = Agressor
+    template_name = 'ocorrencias/lista_agressores.html'
+    context_object_name = 'agressores'
+
+# Ocorrência Views
+class ListaOcorrenciasView(ListView):
+    model = Ocorrencia
+    template_name = 'ocorrencias/lista_ocorrencias.html'
+    context_object_name = 'ocorrencias'
+
+# Botão do Pânico Views
+class ListaBotoesPanicoView(ListView):
+    model = BotaoPanico
+    template_name = 'ocorrencias/botao_panico.html'
+    context_object_name = 'botoes'
+
+# Boletim de Ocorrência Views
+class ListaBOView(ListView):
+    model = Boletim_Ocorrencia
+    template_name = 'ocorrencias/boletim_ocorrencia.html'
+    context_object_name = 'bo'
+
+# Views restrito
+class RestritoView(TemplateView):
+    template_name = 'ocorrencias/restrito.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['vitimas'] = Vitima.objects.all()
+        context['agressores'] = Agressor.objects.all()
+        context['ocorrencias'] = Ocorrencia.objects.all()
+        context['botoes_panico'] = BotaoPanico.objects.all()
+        return context
+
+# Views restrito (barbara)
+class BarbaraView(TemplateView):
+    template_name = 'ocorrencias/barbara.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['vitimas'] = Vitima.objects.all()
+        context['agressores'] = Agressor.objects.all()
+        context['ocorrencias'] = Ocorrencia.objects.all()
+        context['boletins_ocorrencias'] = Boletim_Ocorrencia.objects.all()
+        context['denuncias'] = Denuncia.objects.all()
+        context['formularios_contato'] = Formulario_Contato.objects.all()
+        context['boletim_form'] = Boletim_OcorrenciaForm()  # Adicionando o formulário ao contexto
+        return context
+
+    def post(self, request):
+        form = Boletim_OcorrenciaForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Boletim de ocorrência criado com sucesso!')
+            return redirect('barbara')  # Redireciona para a mesma página após a criação
+        else:
+            messages.error(request, 'Erro ao criar boletim. Verifique os dados e tente novamente.')
+            return render(request, self.template_name, {'boletim_form': form, **self.get_context_data()})
+
+# Defs para permitir adição de itens na database
 @csrf_exempt
 def create_vitima(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = VitimaForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             messages.success(request, 'Vítima criada com sucesso!')
-            return redirect('lista_vitimas')  # Substitua pelo nome da URL da lista de vítimas, se existir
-        else:
-            messages.error(request, 'Erro ao criar vítima. Verifique os dados e tente novamente.')
+            return redirect('home')
     else:
         form = VitimaForm()
     
     return render(request, 'ocorrencias/create_vitima.html', {'form': form})
+
 
 @csrf_exempt
 def create_contato(request):
@@ -34,64 +99,17 @@ def create_contato(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Contato criado com sucesso!')
-            return redirect('create_vitima')  # Redireciona de volta para a página de criação da vítima
+            return JsonResponse({'message': 'Contato criado com sucesso!'}, status=201)
         else:
             messages.error(request, 'Erro ao criar contato. Verifique os dados e tente novamente.')
-
-    return redirect('ocorrencias/create_vitima')  # Caso não seja um POST, redireciona
-
-# Agressor Views
-def lista_agressores(request):
-    agressores = Agressor.objects.all()
-    return render(request, 'ocorrencias/lista_agressores.html', {'agressores': agressores})
-
-# Ocorrência Views
-def lista_ocorrencias(request):
-    ocorrencias = Ocorrencia.objects.all()
-    return render(request, 'ocorrencias/lista_ocorrencias.html', {'ocorrencias': ocorrencias})
-
-# Botao do Panico Views
-def lista_botoes_panico(request):
-    botoes = BotaoPanico.objects.all()  
-    return render(request, 'ocorrencias/botao_panico.html', {'botoes': botoes})
-
-# Boletim de Ocorrencia Views
-def lista_bo(request):
-    bos = Boletim_Ocorrencia.objects.all()  
-    return render(request, 'ocorrencias/boletim_ocorrencia.html', {'bo': bos})
-
-# Views restrito
-def restrito(request):
-    vitimas = Vitima.objects.all()  
-    agressores = Agressor.objects.all()  
-    ocorrencias = Ocorrencia.objects.all()  
-    botoes_panico = BotaoPanico.objects.all()
+            return JsonResponse({'error': 'Erro ao criar contato. Verifique os dados e tente novamente.'}, status=400)
+@csrf_exempt
+def create_boletim(request):
+    if request.method == "POST":
+        form = Boletim_OcorrenciaForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+    else:
+        form = Boletim_OcorrenciaForm()
     
-    context = {
-        'vitimas': vitimas,
-        'agressores': agressores,
-        'ocorrencias': ocorrencias,
-        'botoes_panico': botoes_panico,
-    }
-    
-    return render(request, 'ocorrencias/restrito.html', context)
-
-# Views restrito
-def barbara(request):
-    vitimas = Vitima.objects.all()  
-    agressores = Agressor.objects.all()  
-    ocorrencias = Ocorrencia.objects.all()  
-    boletins_ocorrencias = Boletim_Ocorrencia.objects.all()
-    denuncias = Denuncia.objects.all()
-    formularios_contato = Formulario_Contato.objects.all()
-    
-    context = {
-        'vitimas': vitimas,
-        'agressores': agressores,
-        'ocorrencias': ocorrencias,
-        'boletins_ocorrencias': boletins_ocorrencias,
-        'denuncias' : denuncias,
-        'formularios_contato': formularios_contato,
-    }
-    
-    return render(request, 'ocorrencias/barbara.html', context)
+    return render(request, 'ocorrencias/create_boletim.html', {'form': form})

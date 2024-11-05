@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Boletim de Ocorrência</title>
+    <style>
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cadastrar Boletim de Ocorrência</h1>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="{{ form.tipo_ocorrencia.id_for_label }}">{{ form.tipo_ocorrencia.label }}</label>
+            {{ form.tipo_ocorrencia }}
+            {% if form.tipo_ocorrencia.errors %}
+                <div class="error">{{ form.tipo_ocorrencia.errors|first }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.nome_completo_vitima.id_for_label }}">{{ form.nome_completo_vitima.label }}</label>
+            {{ form.nome_completo_vitima }}
+            {% if form.nome_completo_vitima.errors %}
+                <div class="error">{{ form.nome_completo_vitima.errors|first }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.nome_social_vitima.id_for_label }}">{{ form.nome_social_vitima.label }}</label>
+            {{ form.nome_social_vitima }}
+            {% if form.nome_social_vitima.errors %}
+                <div class="error">{{ form.nome_social_vitima.errors|first }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.cidade_nascimento_vitima.id_for_label }}">{{ form.cidade_nascimento_vitima.label }}</label>
+            {{ form.cidade_nascimento_vitima }}
+            {% if form.cidade_nascimento_vitima.errors %}
+                <div class="error">{{ form.cidade_nascimento_vitima.errors|first }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.estado_nascimento_vitima.id_for_label }}">{{ form.estado_nascimento_vitima.label }}</label>
+            {{ form.estado_nascimento_vitima }}
+            {% if form.estado_nascimento_vitima.errors %}
+                <div class="error">{{ form.estado_nascimento_vitima.errors|first }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.email_vitima.id_for_label }}">{{ form.email_vitima.label }}</label>
+            {{ form.email_vitima }}
+            {% if form.email_vitima.errors %}
+                <div class="error">{{ form.email_vitima.errors|first }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.telefone_vitima.id_for_label }}">{{ form.telefone_vitima.label }}</label>
+            {{ form.telefone_vitima }}
+            {% if form.telefone_vitima.errors %}
+                <div class="error">{{ form.telefone_vitima.errors|first }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.telefone_familiar_amigo_vitima.id_for_label }}">{{ form.telefone_familiar_amigo_vitima.label }}</label>
+            {{ form.telefone_familiar_amigo_vitima }}
+            {% if form.telefone_familiar_amigo_vitima.errors %}
+                <div class="error">{{ form.telefone_familiar_amigo_vitima.errors|first }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.data_nascimento_vitima.id_for_label }}">{{ form.data_nascimento_vitima.label }}</label>
+            {{ form.data_nascimento_vitima }}
+            {% if form.data_nascimento_vitima.errors %}
+                <div class="error">{{ form.data_nascimento_vitima.errors|first }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.rg_vitima.id_for_label }}">{{ form.rg_vitima.label }}</label>
+            {{ form.rg_vitima }}
+            {% if form.rg_vitima.errors %}
+                <div class="error">{{ form.rg_vitima.errors|first }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.cpf_vitima.id_for_label }}">{{ form.cpf_vitima.label }}</label>
+            {{ form.cpf_vitima }}
+            {% if form.cpf_vitima.errors %}
+                <div class="error">{{ form.cpf_vitima.errors|first }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.is_estrangeira_vitima.id_for_label }}">{{ form.is_estrangeira_vitima.label }}</label>
+            {{ form.is_estrangeira_vitima }}
+            {% if form.is_estrangeira_vitima.errors %}
+                <div class="error">{{ form.is_estrangeira_vitima.errors|first }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.cep_vitima.id_for_label }}">{{ form.cep_vitima.label }}</label>
+            {{ form.cep_vitima }}
+            {% if form.cep_vitima.errors %}
+                <div class="error">{{ form.cep_vitima.errors|first }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.endereco_vitima.id_for_label }}">{{ form.endereco_vitima.label }}</label>
+            {{ form.endereco_vitima }}
+            {% if form.endereco_vitima.errors %}
+                <div class="error">{{ form.endereco_vitima.errors|first }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.complemento_vitima.id_for_label }}">{{ form.complemento_vitima.label }}</label>
+            {{ form.complemento_vitima }}
+            {% if form.complemento_vitima.errors %}
+                <div class="error">{{ form.complemento_vitima.errors|first }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.bairro_vitima.id_for_label }}">{{ form.bairro_vitima.label }}</label>
+            {{ form.bairro_vitima }}
+            {% if form.bairro_vitima.errors %}
+                <div class="error">{{ form.bairro_vitima.errors|first }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.cidade_vitima.id_for_label }}">{{ form.cidade_vitima.label }}</label>
+            {{ form.cidade_vitima }}
+            {% if form.cidade_vitima.errors %}
+                <div class="error">{{ form.cidade_vitima.errors|first }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.nome_completo_agressor.id_for_label }}">{{ form.nome_completo_agressor.label }}</label>
+            {{ form.nome_completo_agressor }}
+            {% if form.nome_completo_agressor.errors %}
+                <div class="error">{{ form.nome_completo_agressor.errors|first }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.nome_social_agressor.id_for_label }}">{{ form.nome_social_agressor.label }}</label>
+            {{ form.nome_social_agressor }}
+            {% if form.nome_social_agressor.errors %}
+                <div class="error">{{ form.nome_social_agressor.errors|first }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.sexo_agressor.id_for_label }}">{{ form.sexo_agressor.label }}</label>
+            {{ form.sexo_agressor }}
+            {% if form.sexo_agressor.errors %}
+                <div class="error">{{ form.sexo_agressor.errors|first }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.profissao_agressor.id_for_label }}">{{ form.profissao_agressor.label }}</label>
+            {{ form.profissao_agressor }}
+            {% if form.profissao_agressor.errors %}
+                <div class="error">{{ form.profissao_agressor.errors|first }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.telefone_agressor.id_for_label }}">{{ form.telefone_agressor.label }}</label>
+            {{ form.telefone_agressor }}
+            {% if form.telefone_agressor.errors %}
+                <div class="error">{{ form.telefone_agressor.errors|first }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.email_agressor.id_for_label }}">{{ form.email_agressor.label }}</label>
+            {{ form.email_agressor }}
+            {% if form.email_agressor.errors %}
+                <div class="error">{{ form.email_agressor.errors|first }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.relacionamento_vitima_agressor.id_for_label }}">{{ form.relacionamento_vitima_agressor.label }}</label>
+            {{ form.relacionamento_vitima_agressor }}
+            {% if form.relacionamento_vitima_agressor.errors %}
+                <div class="error">{{ form.relacionamento_vitima_agressor.errors|first }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.mora_com_vitima.id_for_label }}">{{ form.mora_com_vitima.label }}</label>
+            {{ form.mora_com_vitima }}
+            {% if form.mora_com_vitima.errors %}
+                <div class="error">{{ form.mora_com_vitima.errors|first }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.possui_filhos_agressor.id_for_label }}">{{ form.possui_filhos_agressor.label }}</label>
+            {{ form.possui_filhos_agressor }}
+            {% if form.possui_filhos_agressor.errors %}
+                <div class="error">{{ form.possui_filhos_agressor.errors|first }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.data_fato.id_for_label }}">{{ form.data_fato.label }}</label>
+            {{ form.data_fato }}
+            {% if form.data_fato.errors %}
+                <div class="error">{{ form.data_fato.errors|first }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.hora_fato.id_for_label }}">{{ form.hora_fato.label }}</label>
+            {{ form.hora_fato }}
+            {% if form.hora_fato.errors %}
+                <div class="error">{{ form.hora_fato.errors|first }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.local_fato.id_for_label }}">{{ form.local_fato.label }}</label>
+            {{ form.local_fato }}
+            {% if form.local_fato.errors %}
+                <div class="error">{{ form.local_fato.errors|first }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.descricao_detalhada_ocorrido.id_for_label }}">{{ form.descricao_detalhada_ocorrido.label }}</label>
+            {{ form.descricao_detalhada_ocorrido }}
+            {% if form.descricao_detalhada_ocorrido.errors %}
+                <div class="error">{{ form.descricao_detalhada_ocorrido.errors|first }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.medidas_protetivas.id_for_label }}">{{ form.medidas_protetivas.label }}</label>
+            {{ form.medidas_protetivas }}
+            {% if form.medidas_protetivas.errors %}
+                <div class="error">{{ form.medidas_protetivas.errors|first }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.evidencias.id_for_label }}">{{ form.evidencias.label }}</label>
+            {{ form.evidencias }}
+            {% if form.evidencias.errors %}
+                <div class="error">{{ form.evidencias.errors|first }}</div>
+            {% endif %}
+        </div>
+
+        <button type="submit">Salvar Boletim de Ocorrência</button>
+    </form>
+</body>
+</html>

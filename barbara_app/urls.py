@@ -1,14 +1,27 @@
 from django.urls import path
 from . import views
+from .views import (
+    HomeView,
+    BarbaraView,
+    ListaVitimasView,
+    ListaAgressoresView,
+    ListaOcorrenciasView,
+    ListaBotoesPanicoView,
+    ListaBOView,
+    RestritoView
+)
 
 urlpatterns = [
-    path('', views.home, name='home'),  
-    path('barbara/', views.barbara, name='barbara'),
-    path('restrito/vitimas/', views.lista_vitimas, name='lista_vitimas'),
-    path('restrito/agressores/', views.lista_agressores, name='lista_agressores'),
-    path('restrito/ocorrencias/', views.lista_ocorrencias, name='lista_ocorrencias'),
-    path('restrito/botao_panico/', views.lista_botoes_panico, name='botao_panico'),
+    path('', HomeView.as_view(), name='home'),  
+    path('barbara/', BarbaraView.as_view(), name='barbara'),
+    path('restrito/vitimas/', ListaVitimasView.as_view(), name='lista_vitimas'),
+    path('restrito/agressores/', ListaAgressoresView.as_view(), name='lista_agressores'),
+    path('restrito/ocorrencias/', ListaOcorrenciasView.as_view(), name='lista_ocorrencias'),
+    path('restrito/botao_panico/', ListaBotoesPanicoView.as_view(), name='botao_panico'),
+    path('restrito/', RestritoView.as_view(), name='restrito'),
+    path('restrito/boletins_ocorrencia/', ListaBOView.as_view(), name='lista_bo'),
+    # URLs para criar novos registros (aqui você pode manter as views baseadas em funções)
     path('restrito/criar_vitima/', views.create_vitima, name='create_vitima'),
-    path('restrito/', views.restrito, name='restrito'),
     path('create_contato/', views.create_contato, name='create_contato'),
+    path('create_boletim/', views.create_boletim, name='create_boletim'),
 ]
