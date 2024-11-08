@@ -13,7 +13,7 @@ from .views import (
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),  
-    path('barbara/', BarbaraView.as_view(), name='barbara'),
+    path('barbara/', BarbaraView.as_view(), name='barbara_view'),
     path('restrito/vitimas/', ListaVitimasView.as_view(), name='lista_vitimas'),
     path('restrito/agressores/', ListaAgressoresView.as_view(), name='lista_agressores'),
     path('restrito/ocorrencias/', ListaOcorrenciasView.as_view(), name='lista_ocorrencias'),

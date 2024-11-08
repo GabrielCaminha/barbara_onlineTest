@@ -154,7 +154,7 @@ class Boletim_Ocorrencia(models.Model):
     hora_fato = models.TimeField(default='00:00:00')
     local_fato = models.CharField(max_length=255, default='Local não informado')  
     descricao_detalhada_ocorrido = models.TextField(default='Descrição não informada')
-    medidas_protetivas = models.TextField(blank=True, null=True)
+    medidas_protetivas = models.CharField(max_length=255, default='Nao necessarias')
 
     #Evidencias
     evidencias = models.FileField(upload_to='evidencias/', null=True, blank=True, validators=[validate_file_extension])

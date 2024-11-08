@@ -64,18 +64,28 @@ class BarbaraView(TemplateView):
         context['boletins_ocorrencias'] = Boletim_Ocorrencia.objects.all()
         context['denuncias'] = Denuncia.objects.all()
         context['formularios_contato'] = Formulario_Contato.objects.all()
-        context['boletim_form'] = Boletim_OcorrenciaForm()  # Adicionando o formulário ao contexto
+        context['boletim_form'] = Boletim_OcorrenciaForm()  
         return context
 
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         form = Boletim_OcorrenciaForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Boletim de ocorrência criado com sucesso!')
-            return redirect('barbara')  # Redireciona para a mesma página após a criação
+            return redirect('ocorrencias/barbara.html')  # Substitua pelo nome da URL para BarbaraView
         else:
-            messages.error(request, 'Erro ao criar boletim. Verifique os dados e tente novamente.')
-            return render(request, self.template_name, {'boletim_form': form, **self.get_context_data()})
+            # Caso o formulário seja inválido, renderiza a página com o formulário e erros
+            return render(request, 'ocorrencias/barbara.html', {'form': form})
+
+def create_boletim(request):
+    if request.method == "POST":
+        form = Boletim_OcorrenciaForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('ocorrencias/barbara.html')  # Substitua pelo nome da URL para BarbaraView
+    else:
+        form = Boletim_OcorrenciaForm()
+    
+    return render(request, 'ocorrencias/home.html', {'form': form})
 
 # Defs para permitir adição de itens na database
 @csrf_exempt
@@ -107,9 +117,13 @@ def create_contato(request):
 def create_boletim(request):
     if request.method == "POST":
         form = Boletim_OcorrenciaForm(request.POST, request.FILES)
+        
         if form.is_valid():
             form.save()
+        else:
+            # Exibe os erros no terminal ou adiciona ao contexto para mostrar no template
+            print(form.errors)
     else:
         form = Boletim_OcorrenciaForm()
-    
+
     return render(request, 'ocorrencias/create_boletim.html', {'form': form})

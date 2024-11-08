@@ -71,7 +71,45 @@ class BotaoPanicoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+from django import forms
+from .models import Boletim_Ocorrencia
+
+from django import forms
+from .models import Boletim_Ocorrencia
+
 class Boletim_OcorrenciaForm(forms.ModelForm):
+    TIPOS_OCORRENCIA = [
+        ('violencia_fisica', 'Violência Física'),
+        ('violencia_psicologica', 'Violência Psicológica'),
+        ('violencia_patrimonial', 'Violência Patrimonial'),
+        ('violencia_moral', 'Violência Moral'),
+    ]
+    
+    RELACIONAMENTOS = [
+        ('conjuge', 'Cônjuge/Companheiro(a)'),
+        ('ex_conjuge', 'Ex-Cônjuge/Ex-Companheiro(a)'),
+        ('namorado', 'Namorado(a)'),
+        ('ex_namorado', 'Ex-Namorado(a)'),
+        ('familiar', 'Familiar'),
+    ]
+    
+    MEDIDAS_PROTETIVAS_CHOICES = [
+        ('afastamento_agressor', 'Afastamento do agressor do lar'),
+        ('proibicao_aproximacao', 'Proibição de aproximação'),
+        ('proibicao_contato', 'Proibição de contato'),
+        ('proibicao_frequentacao', 'Proibição de frequentação de determinados lugares'),
+    ]
+
+    
+    tipo_ocorrencia = forms.ChoiceField(choices=TIPOS_OCORRENCIA, label="Tipo de Ocorrência")
+    relacionamento_vitima_agressor = forms.ChoiceField(choices=RELACIONAMENTOS, label="Relacionamento com a Vítima")
+    medidas_protetivas = forms.MultipleChoiceField(
+        choices=MEDIDAS_PROTETIVAS_CHOICES,
+        widget=forms.CheckboxSelectMultiple,
+        label="Medidas Protetivas",
+        required=False,
+    )
+
     class Meta:
         model = Boletim_Ocorrencia
         fields = [
@@ -106,8 +144,10 @@ class Boletim_OcorrenciaForm(forms.ModelForm):
             'local_fato',
             'descricao_detalhada_ocorrido',
             'medidas_protetivas',
-            'evidencias',  # Campo para upload de evidências
+            'evidencias',
         ]
+
+
 
     # Você pode personalizar os widgets se necessário
     def __init__(self, *args, **kwargs):
@@ -117,6 +157,8 @@ class Boletim_OcorrenciaForm(forms.ModelForm):
         self.fields['data_fato'].widget = forms.DateInput(attrs={'type': 'date'})
         self.fields['hora_fato'].widget = forms.TimeInput(attrs={'type': 'time'})
         self.fields['medidas_protetivas'].widget = forms.CheckboxSelectMultiple()
+
+        
 
         # Adicionando validação extra se necessário
         # Exemplo de uma validação: garantir que a data do fato não seja no futuro
