@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Botão do Pânico</title>
+</head>
+<body>
+    <h1>Cadastrar Botão do Pânico</h1>
+
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div>
+            <label for="data_ocorrido">Data do Ocorrido:</label>
+            {{ form.data_ocorrido }}
+        </div>
+
+        <div>
+            <label for="hora">Hora:</label>
+            {{ form.hora }}
+        </div>
+
+        <div>
+            <label for="vitima">Vítima:</label>
+            {{ form.vitima }}
+        </div>
+
+        <div>
+            <label for="localizacao">Localização:</label>
+            {{ form.localizacao }}
+        </div>
+
+        <div>
+            <label for="telefone_vitima">Telefone da Vítima:</label>
+            {{ form.telefone_vitima }}
+        </div>
+
+        <div>
+            <label for="status">Status:</label>
+            {{ form.status }}
+        </div>
+
+        <button type="submit">Cadastrar</button>
+    </form>
+
+    <br>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Ocorrência</title>
+</head>
+<body>
+    <h1>Cadastrar Ocorrência</h1>
+
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div>
+            <label for="vitima">Vítima:</label>
+            {{ form.vitima }}
+        </div>
+
+        <div>
+            <label for="agressor">Agressor:</label>
+            {{ form.agressor }}
+        </div>
+
+        <div>
+            <label for="tipo_crime">Tipo de Crime:</label>
+            {{ form.tipo_crime }}
+        </div>
+
+        <div>
+            <label for="descricao">Descrição:</label>
+            {{ form.descricao }}
+        </div>
+
+        <div>
+            <label for="data_ocorrencia">Data da Ocorrência:</label>
+            {{ form.data_ocorrencia }}
+        </div>
+
+        <div>
+            <label for="localizacao">Localização:</label>
+            {{ form.localizacao }}
+        </div>
+
+        <div>
+            <label for="medidas_preventivas">Medidas Preventivas:</label>
+            {{ form.medidas_preventivas }}
+        </div>
+
+        <button type="submit">Cadastrar</button>
+    </form>
+
+    <br>
+    <a href="{% url 'lista_ocorrencias' %}">Voltar para a lista de ocorrências</a>
+</body>
+</html>

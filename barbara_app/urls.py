@@ -24,4 +24,9 @@ urlpatterns = [
     path('restrito/criar_vitima/', views.create_vitima, name='create_vitima'),
     path('create_contato/', views.create_contato, name='create_contato'),
     path('create_boletim/', views.create_boletim, name='create_boletim'),
+    path('cadastrar_agressor/', views.cadastrar_agressor, name='cadastrar_agressor'),
+    path('cadastrar_ocorrencia/', views.cadastrar_ocorrencia, name='cadastrar_ocorrencia'),
+    path('cadastrar_denuncia/', views.cadastrar_denuncia, name='cadastrar_denuncia'),
+    path('cadastrar_botaopanico/', views.cadastrar_botao_panico, name='cadastrar_botao_panico'),
+    path('cadastrar_formulario_contato/', views.cadastrar_formulario_contato, name='cadastrar_formulario_contato'),
 ]

@@ -4,7 +4,7 @@ from django.views.generic import TemplateView, ListView
 from .models import Vitima, Agressor, Ocorrencia, BotaoPanico, Boletim_Ocorrencia, Denuncia, Formulario_Contato, ListaContatos
 from .forms import VitimaForm, AgressorForm, OcorrenciaForm, Boletim_OcorrenciaForm, DenunciaForm, Formulario_ContatoForm, ListaContatosForm, BotaoPanicoForm
 from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 
 # Home View
 class HomeView(TemplateView):
@@ -71,9 +71,8 @@ class BarbaraView(TemplateView):
         form = Boletim_OcorrenciaForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('ocorrencias/barbara.html')  # Substitua pelo nome da URL para BarbaraView
+            return redirect('ocorrencias/barbara.html')  
         else:
-            # Caso o formulário seja inválido, renderiza a página com o formulário e erros
             return render(request, 'ocorrencias/barbara.html', {'form': form})
 
 def create_boletim(request):
@@ -81,13 +80,12 @@ def create_boletim(request):
         form = Boletim_OcorrenciaForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('ocorrencias/barbara.html')  # Substitua pelo nome da URL para BarbaraView
+            return redirect('ocorrencias/barbara.html')  
     else:
         form = Boletim_OcorrenciaForm()
     
     return render(request, 'ocorrencias/home.html', {'form': form})
 
-# Defs para permitir adição de itens na database
 @csrf_exempt
 def create_vitima(request):
     if request.method == "POST":
@@ -95,7 +93,7 @@ def create_vitima(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Vítima criada com sucesso!')
-            return redirect('home')
+            return redirect('lista_vitimas')
     else:
         form = VitimaForm()
     
@@ -109,10 +107,9 @@ def create_contato(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Contato criado com sucesso!')
-            return JsonResponse({'message': 'Contato criado com sucesso!'}, status=201)
         else:
             messages.error(request, 'Erro ao criar contato. Verifique os dados e tente novamente.')
-            return JsonResponse({'error': 'Erro ao criar contato. Verifique os dados e tente novamente.'}, status=400)
+        
 @csrf_exempt
 def create_boletim(request):
     if request.method == "POST":
@@ -121,9 +118,80 @@ def create_boletim(request):
         if form.is_valid():
             form.save()
         else:
-            # Exibe os erros no terminal ou adiciona ao contexto para mostrar no template
             print(form.errors)
     else:
         form = Boletim_OcorrenciaForm()
 
     return render(request, 'ocorrencias/create_boletim.html', {'form': form})
+
+def cadastrar_agressor(request):
+    if request.method == 'POST':
+        form = AgressorForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_agressores')
+        else:
+            print(form.errors)  
+    else:
+        form = AgressorForm()
+    return render(request, 'ocorrencias/agressor_form.html', {'form': form})
+
+def cadastrar_ocorrencia(request):
+    if request.method == 'POST':
+        form = OcorrenciaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Ocorrência cadastrada com sucesso!')
+            return redirect('lista_ocorrencias')
+        else:
+            messages.error(request, 'Erro ao cadastrar a ocorrência. Verifique os dados.')
+
+    else:
+        form = OcorrenciaForm()
+    
+    return render(request, 'ocorrencias/cadastrar_ocorrencia.html', {'form': form})
+
+@csrf_exempt
+def cadastrar_denuncia(request):
+    if request.method == 'POST':
+        form = DenunciaForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Denúncia cadastrada com sucesso!')
+            #return redirect('lista_denuncias')  
+        else:
+            messages.error(request, 'Erro ao cadastrar a denúncia. Verifique os dados.')
+    else:
+        form = DenunciaForm()
+
+    return render(request, 'ocorrencias/denuncia_form.html', {'form': form})
+
+@csrf_exempt
+def cadastrar_botao_panico(request):
+    if request.method == 'POST':
+        form = BotaoPanicoForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Botão do Pânico cadastrado com sucesso!')
+            return redirect('botao_panico')  
+        else:
+            messages.error(request, 'Erro ao cadastrar o botão do pânico. Verifique os dados.')
+    else:
+        form = BotaoPanicoForm()
+
+    return render(request, 'ocorrencias/botao_panico_form.html', {'form': form})
+
+csrf_exempt
+def cadastrar_formulario_contato(request):
+    if request.method == 'POST':
+        form = Formulario_ContatoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Formulário de contato cadastrado com sucesso!')
+            #return redirect('ocorrencias/lista_formularios_contato')  
+        else:
+            messages.error(request, 'Erro ao cadastrar o formulário. Verifique os dados e tente novamente.')
+    else:
+        form = Formulario_ContatoForm()
+
+    return render(request, 'ocorrencias/formulario_contato_form.html', {'form': form})
