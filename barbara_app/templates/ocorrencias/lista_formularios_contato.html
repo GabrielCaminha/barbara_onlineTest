@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Formulários de Contato</title>
+</head>
+<body>
+    <h1>Lista de Formulários de Contato</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Órgão</th>
+                <th>Nome do Destinatário</th>
+                <th>Assunto</th>
+                <th>Conteúdo</th>
+                <th>Email do Remetente</th>
+                <th>Telefone do Remetente</th>
+                <th>Nome do Remetente</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for contato in formularios_contato %}
+            <tr>
+                <td>{{ contato.orgao }}</td>
+                <td>{{ contato.nome_destinatario }}</td>
+                <td>{{ contato.assunto }}</td>
+                <td>{{ contato.conteudo }}</td>
+                <td>{{ contato.email_remetente }}</td>
+                <td>{{ contato.telefone_remetente }}</td>
+                <td>{{ contato.nome_remetente }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

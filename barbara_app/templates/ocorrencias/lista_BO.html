@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Boletins de Ocorrência</title>
+</head>
+<body>
+    <h1>Boletins de Ocorrência</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Tipo de Ocorrência</th>
+                <th>Nome Completo da Vítima</th>
+                <th>Nome Social da Vítima</th>
+                <th>Cidade de Nascimento da Vítima</th>
+                <th>Estado de Nascimento da Vítima</th>
+                <th>Email da Vítima</th>
+                <th>Telefone da Vítima</th>
+                <th>Telefone Familiar/Amigo</th>
+                <th>Data de Nascimento da Vítima</th>
+                <th>RG da Vítima</th>
+                <th>CPF da Vítima</th>
+                <th>Estrangeira?</th>
+                <th>CEP da Vítima</th>
+                <th>Endereço da Vítima</th>
+                <th>Complemento</th>
+                <th>Bairro</th>
+                <th>Cidade</th>
+                <th>Nome Completo do Agressor</th>
+                <th>Nome Social do Agressor</th>
+                <th>Sexo do Agressor</th>
+                <th>Profissão do Agressor</th>
+                <th>Telefone do Agressor</th>
+                <th>Email do Agressor</th>
+                <th>Relacionamento com a Vítima</th>
+                <th>Mora com a Vítima?</th>
+                <th>Possui Filhos?</th>
+                <th>Data do Fato</th>
+                <th>Hora do Fato</th>
+                <th>Local do Fato</th>
+                <th>Descrição Detalhada</th>
+                <th>Medidas Protetivas</th>
+                <th>Evidências</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for boletim in boletins %}
+            <tr>
+                <td>{{ boletim.tipo_ocorrencia }}</td>
+                <td>{{ boletim.nome_completo_vitima }}</td>
+                <td>{{ boletim.nome_social_vitima }}</td>
+                <td>{{ boletim.cidade_nascimento_vitima }}</td>
+                <td>{{ boletim.estado_nascimento_vitima }}</td>
+                <td>{{ boletim.email_vitima }}</td>
+                <td>{{ boletim.telefone_vitima }}</td>
+                <td>{{ boletim.telefone_familiar_amigo_vitima }}</td>
+                <td>{{ boletim.data_nascimento_vitima }}</td>
+                <td>{{ boletim.rg_vitima }}</td>
+                <td>{{ boletim.cpf_vitima }}</td>
+                <td>{{ boletim.is_estrangeira_vitima|yesno:"Sim,Não" }}</td>
+                <td>{{ boletim.cep_vitima }}</td>
+                <td>{{ boletim.endereco_vitima }}</td>
+                <td>{{ boletim.complemento_vitima }}</td>
+                <td>{{ boletim.bairro_vitima }}</td>
+                <td>{{ boletim.cidade_vitima }}</td>
+                <td>{{ boletim.nome_completo_agressor }}</td>
+                <td>{{ boletim.nome_social_agressor }}</td>
+                <td>{{ boletim.sexo_agressor }}</td>
+                <td>{{ boletim.profissao_agressor }}</td>
+                <td>{{ boletim.telefone_agressor }}</td>
+                <td>{{ boletim.email_agressor }}</td>
+                <td>{{ boletim.relacionamento_vitima_agressor }}</td>
+                <td>{{ boletim.mora_com_vitima|yesno:"Sim,Não" }}</td>
+                <td>{{ boletim.possui_filhos_agressor|yesno:"Sim,Não" }}</td>
+                <td>{{ boletim.data_fato }}</td>
+                <td>{{ boletim.hora_fato }}</td>
+                <td>{{ boletim.local_fato }}</td>
+                <td>{{ boletim.descricao_detalhada_ocorrido }}</td>
+                <td>{{ boletim.medidas_protetivas }}</td>
+                <td>
+                    {% if boletim.evidencias %}
+                    <a href="{{ boletim.evidencias.url }}" target="_blank">Ver Evidência</a>
+                    {% else %}
+                    Não há evidências
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

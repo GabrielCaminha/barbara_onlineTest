@@ -37,8 +37,20 @@ class ListaBotoesPanicoView(ListView):
 # Boletim de Ocorrência Views
 class ListaBOView(ListView):
     model = Boletim_Ocorrencia
-    template_name = 'ocorrencias/boletim_ocorrencia.html'
-    context_object_name = 'bo'
+    template_name = 'ocorrencias/lista_BO.html'
+    context_object_name = 'boletins'
+
+#Denuncia Views
+class ListaDenunciasView(ListView):
+    model = Denuncia
+    template_name = 'ocorrencias/lista_denuncias.html'
+    context_object_name = 'denuncias'
+
+#Formularios Views
+class ListaFormulariosContatoView(ListView):
+    model = Formulario_Contato
+    template_name = 'ocorrencias/lista_formularios_contato.html'
+    context_object_name = 'formularios_contato'
 
 # Views restrito
 class RestritoView(TemplateView):
@@ -74,6 +86,8 @@ class BarbaraView(TemplateView):
             return redirect('ocorrencias/barbara.html')  
         else:
             return render(request, 'ocorrencias/barbara.html', {'form': form})
+        
+
 
 def create_boletim(request):
     if request.method == "POST":

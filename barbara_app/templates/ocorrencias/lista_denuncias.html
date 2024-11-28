@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Denúncias</title>
+</head>
+<body>
+    <h1>Lista de Denúncias</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Órgão Destinatário</th>
+                <th>Email do Remetente</th>
+                <th>Telefone do Remetente</th>
+                <th>Nome do Remetente</th>
+                <th>Nome do Destinatário</th>
+                <th>Assunto</th>
+                <th>Conteúdo</th>
+                <th>Anexos</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for denuncia in denuncias %}
+            <tr>
+                <td>{{ denuncia.orgao_destinatario }}</td>
+                <td>{{ denuncia.email_remetente }}</td>
+                <td>{{ denuncia.telefone_remetente }}</td>
+                <td>{{ denuncia.nome_remetente }}</td>
+                <td>{{ denuncia.nome_destinatario }}</td>
+                <td>{{ denuncia.assunto }}</td>
+                <td>{{ denuncia.conteudo }}</td>
+                <td>
+                    {% if denuncia.anexos %}
+                    <a href="{{ denuncia.anexos.url }}" target="_blank">Ver Anexo</a>
+                    {% else %}
+                    Não há anexos
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
