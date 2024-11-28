@@ -14,8 +14,6 @@ DEBUG = True
 # Hosts permitidos
 ALLOWED_HOSTS = ['*']  # Qualquer host para desenvolvimento
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Configurações dos aplicativos instalados
 INSTALLED_APPS = [
